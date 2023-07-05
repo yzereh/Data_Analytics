@@ -1,4 +1,3 @@
-titles
 Implementing Machine Learning in Health Care Addressing Ethical Challenges
 Superresolution based Medical Image Compression for Mobile Platforms
 Advancing the beneficial use of machine learning in health care and medicine Toward a community understanding
