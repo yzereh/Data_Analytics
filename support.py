@@ -56,13 +56,13 @@ def get_stop_words(add_extra_frequent_words: bool, remove_stop_word_signs: bool,
     return stop_words
 
 
-def find_duplicates(collection_of_titles: Sequence[str]) -> Dict:
+def find_duplicates(collection_of_titles: Sequence[str]) -> (Dict, int):
     """
     param collection_of_titles: a non-empty collection of titles
     return: a dictionary of duplicated titles as keys and their associated indices in the collection as values
     """
     counter = -1
-    duplicate_counts = 0
+    duplicates_count = 0
     collection_of_titles_by_indices = {}
     duplicated_with_indices = {}
     for each_title in collection_of_titles:
@@ -70,7 +70,7 @@ def find_duplicates(collection_of_titles: Sequence[str]) -> Dict:
         if collection_of_titles_by_indices.get(each_title, 'not_here') != 'not_here':
             collection_of_titles_by_indices[each_title].append(counter)
             if each_title is not None and each_title != '':
-                duplicate_counts += 1
+                duplicates_count += 1
                 try:
                     duplicated_with_indices[each_title].append(counter)
                 except KeyError:
@@ -78,7 +78,7 @@ def find_duplicates(collection_of_titles: Sequence[str]) -> Dict:
                     duplicated_with_indices[each_title].append(counter)
         else:
             collection_of_titles_by_indices[each_title] = [counter]
-    return duplicated_with_indices
+    return duplicated_with_indices, duplicates_count
 
 
 def process_clean_the_text(remove_stop_words: bool = True,
@@ -144,7 +144,16 @@ def process_clean_the_text(remove_stop_words: bool = True,
                         f"The additional_frequent_words.json file can be edited in case you think some information "
                         f"is lost.")
 
-    return data
+    duplicated_with_indices, duplicates_count = find_duplicates(read_lines)
+    if duplicates_count > 0:
+        logging.warning(f'There are {duplicates_count} duplicates in the titles. '
+                        f'All duplicates will be replaced by None.')
+
+        for each_list_of_indices in duplicated_with_indices.values():
+            for each_index in each_list_of_indices[1:]:
+                read_lines[each_index] = None
+
+    return read_lines
 
 
 def download_load_stop_words(remove_signs: bool = True, extra_frequent_words: List[str] = None) -> List:
