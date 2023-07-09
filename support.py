@@ -9,16 +9,11 @@ from functools import reduce
 import os
 from itertools import groupby
 
-MAIN_DIRECTORY = "E:/Data_Playground/Analytics/"
+MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
 DATA_FILE_NAME = "health_care_titles.txt"
 ADDITIONAL_FREQUENT_WORDS_FILE_NAME = 'additional_frequent_words.json'
 FREQUENT_WORDS_CATEGORIES = ['health', 'general', 'analytics', 'information technology']
 FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin'
-
-
-def load_data():
-    df = pd.read_csv(os.path.join(MAIN_DIRECTORY, DATA_FILE_NAME), encoding='UTF-8')
-    return df
 
 
 def get_extra_frequent_words_path() -> str:
@@ -84,7 +79,7 @@ def find_duplicates(collection_of_titles: Sequence[str]) -> (Dict, int):
 def process_clean_the_text(remove_stop_words: bool = True,
                            remove_stop_word_signs: bool = True, add_extra_frequent_words: bool = True,
                            extra_frequent_words_categories: str or Sequence[str] = 'all',
-                           stem_the_words: bool = True, drop_non_english=True) -> Sequence:
+                           stem_the_words: bool = True, drop_non_english=True) -> Dict:
     """
     Parameters:
                 remove_stop_word_signs: whether the signs must be removed from the stopwords or not (True/False).
@@ -95,7 +90,8 @@ def process_clean_the_text(remove_stop_words: bool = True,
                 remove_stop_words: whether stopwords must be removed or not.
                 stem_the_words: whether stemming must be done.
                 drop_non_english: drop if a title is not english.
-    return: a sequence of cleaned titles
+    return: a dictionary with two keys, 1. cleand_title: the cleaned data, and
+    2. original_titles: the initial untouched data
 
     """
 
@@ -153,7 +149,7 @@ def process_clean_the_text(remove_stop_words: bool = True,
             for each_index in each_list_of_indices[1:]:
                 read_lines[each_index] = None
 
-    return read_lines
+    return {'cleaned_titles': read_lines, 'original_titles': read_lines_original}
 
 
 def download_load_stop_words(remove_signs: bool = True, extra_frequent_words: List[str] = None) -> List:
