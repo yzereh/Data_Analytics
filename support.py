@@ -1,4 +1,3 @@
-import pandas as pd
 from nltk.corpus import stopwords
 import re
 from nltk.stem import SnowballStemmer
@@ -7,7 +6,6 @@ import logging
 import json
 from functools import reduce
 import os
-from itertools import groupby
 
 MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
 DATA_FILE_NAME = "health_care_titles.txt"
@@ -107,7 +105,7 @@ def process_clean_the_text(remove_stop_words: bool = True,
     number_of_nones = read_lines.count(None)
     if number_of_nones > 0:
         logging.warning(f'The provided data contain {number_of_nones} '
-                        f'non-english titles which will be removed.')
+                        f'non-english titles which will be replaced by Nones.')
 
     read_lines = list(map(lambda each_line: each_line.upper() if each_line else None, read_lines))
     read_lines = map(lambda each_line: re.sub(r"[^\w\s]", "", each_line) if each_line else None, read_lines)
@@ -148,6 +146,7 @@ def process_clean_the_text(remove_stop_words: bool = True,
         for each_list_of_indices in duplicated_with_indices.values():
             for each_index in each_list_of_indices[1:]:
                 read_lines[each_index] = None
+    read_lines = list(map(lambda each_line: None if each_line == '' and each_line is not None else each_line, read_lines))
 
     return {'cleaned_titles': read_lines, 'original_titles': read_lines_original}
 
