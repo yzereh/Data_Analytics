@@ -7,6 +7,9 @@ import json
 from functools import reduce
 import os
 from transformers import AutoTokenizer, AutoModel
+import torch
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.preprocessing import normalize
 
 # MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
 MAIN_DIRECTORY = "E:/Data_Playground/Analytics/"
@@ -14,6 +17,10 @@ DATA_FILE_NAME = "health_care_titles.txt"
 ADDITIONAL_FREQUENT_WORDS_FILE_NAME = 'additional_frequent_words.json'
 FREQUENT_WORDS_CATEGORIES = ['health', 'general', 'analytics', 'information technology']
 FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin'
+TOKEN_PATTERN = r"\b[^\d\W]+\b"
+PRETRAINED_EMBEDDING_MODEL_NAME = 'all-mpnet-base-v2'
+HUGGINGFACE_EMBEDDINGS_OUTPUT_NAME = 'last_hidden_state'
+SENTENCE_TRANSFORMERS_MODELS_FOLDER_HUGGINGFACE = 'sentence-transformers/'
 
 
 def get_extra_frequent_words_path() -> str:
@@ -51,7 +58,7 @@ def get_stop_words(add_extra_frequent_words: bool, remove_stop_word_signs: bool,
     return stop_words
 
 
-def find_duplicates(collection_of_titles: Sequence[str]) -> Union[Dict, int]:
+def find_duplicates(collection_of_titles: Sequence[str]) -> tuple[dict[str, list[int]], int]:
     """
     param collection_of_titles: a non-empty collection of titles
     return: a dictionary of duplicated titles as keys and their associated indices in the collection as values
@@ -230,6 +237,7 @@ def get_frequent_words(path_to_additional_frequent_words: str,
                 raise Exception(f"Couldn't find the key. Please choose from one of these categories: "
                                 f"{FREQUENT_WORDS_CATEGORIES}")
 
+
 def transform_word_to_vec(sequence_of_sentences: Sequence[str], tokenizer_pattern: str = TOKEN_PATTERN,
                           method: str = 'basic', normalize_output: bool = True) -> Sequence[Sequence[float]]:
     """
@@ -286,3 +294,7 @@ def huggingface_sentence_transform(sequence_of_sentences: Sequence[str], normali
         return torch.nn.functional.normalize(pooled_sentence_transforms, p=2, dim=1)
     else:
         return pooled_sentence_transforms
+
+
+
+

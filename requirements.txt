@@ -6,3 +6,4 @@ nltk~=3.8.1
 tensorflow
 fasttext-wheel
 transformers~=4.28.1
+torch~=2.0.1
