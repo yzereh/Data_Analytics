@@ -5,9 +5,9 @@
 <summary>Table of Contents</summary>
  
 > 1. [Projet Description](#project-description)
- > - Purpose of the Project
- > - [Main Collars](#main)
- > - Prerequisites
+ >- Purpose of the Project
+ >- [Main Collars](#main)
+ >- Prerequisites
 
 > 2. Installation
 
