@@ -10,11 +10,11 @@
 >  - [Main Collars](#main-collar)
 >  - [Prerequisites](#prerequisites)
 
-> 2. Installation
+2. Installation
 
-> 3. Usage
+3. Usage
 
-> 4. Codes Explanations
+4. Codes Explanations
 </details>
 
 ### Project Description
