@@ -6,7 +6,7 @@
  
 > 1. [Projet Description](#project-description)
 
- > - > [Purpose of the Project](#purpose)
+  - > [Purpose of the Project](#purpose)
  
  > - [Main Collars](#main-collar)
  
