@@ -4,7 +4,7 @@
 <details>
 <summary>Table of Contents</summary>
  
-> 1. [Projet Description](#project-description)
+1. [Projet Description](#project-description)
 
 - [Purpose of the Project](#purpose)
 - [Main Collars](#main-collar)
