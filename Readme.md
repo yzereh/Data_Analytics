@@ -6,11 +6,9 @@
  
 > 1. [Projet Description](#project-description)
 
-  - > [Purpose of the Project](#purpose)
- 
- > - [Main Collars](#main-collar)
- 
- > - [Prerequisites](#prerequisites)
+- [Purpose of the Project](#purpose)
+- [Main Collars](#main-collar)
+- [Prerequisites](#prerequisites)
 
 > 2. Installation
 
