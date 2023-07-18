@@ -2,7 +2,7 @@
 ---
 
 <details>
-<summary>**Table of Contents**</summary>
+<summary>Table of Contents</summary>
 > 1. [Projet Description](#project-description)
 >  - Purpose of the Project
 >  - [Main Collars](#main)
