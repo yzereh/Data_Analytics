@@ -6,7 +6,7 @@
 1. [Projet Description](#project-description)
 
 >  - [Purpose of the Project](#purpose)
->  - [Main Collars](#main-collar)
+>  - [Main Collars](#main-collars)
 >  - [Prerequisites](#prerequisites)
 
 2. [Installation](#installation)
@@ -47,6 +47,7 @@ To work on this project, we will walk through or scratch the surface of the foll
 4. K-Means clustering
 5. Plotly visualization and Python dash 
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 #### Prerequisites
 
 In terms of methodologies, we will need to be familiar with basic ML and NLP techniques. For the required packages, everything is included in the [requirements.txt](/requirements.txt) file which is laid out as follows:
@@ -83,6 +84,7 @@ pip install -r your_path/requirements.txt
 
 Replace "your_path" with the path leading to the folder where you keep the requirements.txt file. 
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 ### Structure
 ---
 
@@ -90,4 +92,5 @@ The project contains four main modules.
 
 1. The [support.py](/support.py) module, as the name says, contains the majority of required functions supporting the main object of the project located in the [cluster.py](/cluster.py) module. Moreover, the constant variables and the paths to the essential files can be found in this module. We will go through the details in the [Codes Explanations](#codes-explanations) section.
 2. The cluster.py module has the main object that can be used to perform the clustering. In brief, all the concepts pointed out in [Project Description](#project-description) section are executed in this module.
-3.   
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
