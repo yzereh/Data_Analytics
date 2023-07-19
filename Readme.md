@@ -1,7 +1,6 @@
 # Intelligent Research Assistant with an Interactive Visualization 
----
-
 <details>
+ <a name="readme-top"></a>
 <summary>Table of Contents</summary>
  
 1. [Projet Description](#project-description)
@@ -36,6 +35,8 @@ There are two main purposes that we are trying to reach by doing this project. F
 
 Moreover, the codes, visualization and the logic of the project can be a starting point for many other similar projects in the field; as a result, it might provide some ideas for those interested in a similar domain.  
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 #### Main Collars
 
 To work on this project, we will walk through or scratch the surface of the following subjects: 
@@ -65,6 +66,8 @@ In terms of methodologies, we will need to be familiar with basic ML and NLP tec
     - Also, we will use it to apply a sentence transformation model which will be useful to compute the semantic distance among the titles
 > - torch 
 >   - torch is required in case we use Hugging Face
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 ### Installation
 ---
 1. You need to clone the repository on your local machine:
