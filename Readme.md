@@ -37,6 +37,7 @@ Moreover, the codes, visualization and the logic of the project can be a startin
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
 #### Main Collars
 
 To work on this project, we will walk through or scratch the surface of the following subjects: 
@@ -48,6 +49,7 @@ To work on this project, we will walk through or scratch the surface of the foll
 5. Plotly visualization and Python dash 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 #### Prerequisites
 
 In terms of methodologies, we will need to be familiar with basic ML and NLP techniques. For the required packages, everything is included in the [requirements.txt](/requirements.txt) file which is laid out as follows:
@@ -69,8 +71,10 @@ In terms of methodologies, we will need to be familiar with basic ML and NLP tec
 >   - torch is required in case we use Hugging Face
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Installation
 ---
+
 1. You need to clone the repository on your local machine:
 
 ```sh
@@ -85,6 +89,7 @@ pip install -r your_path/requirements.txt
 Replace "your_path" with the path leading to the folder where you keep the requirements.txt file. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Structure
 ---
 
