@@ -1,6 +1,6 @@
 # Intelligent Research Assistant with an Interactive Visualization 
-<details>
  <a name="readme-top"></a>
+<details>
 <summary>Table of Contents</summary>
  
 1. [Projet Description](#project-description)
