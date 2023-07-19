@@ -12,9 +12,9 @@
 
 2. [Installation](#installation)
 
-3. Usage
+3. [Structure](#Structure)
 
-4. Codes Explanations
+4. [Codes Explanations](#codes-explanations)
 </details>
 
 ### Project Description
@@ -79,3 +79,12 @@ pip install -r your_path/requirements.txt
 ```
 
 Replace "your_path" with the path leading to the folder where you keep the requirements.txt file. 
+
+### Structure
+---
+
+The project contains four main modules. 
+
+1. The [support.py](/support.py) module, as the name says, contains the majority of required functions supporting the main object of the project located in the [cluster.py](/cluster.py) module. Moreover, the constant variables and the paths to the essential files can be found in this module. We will go through the details in the [Codes Explanations](#codes-explanations) section.
+2. The cluster.py module has the main object that can be used to perform the clustering. In brief, all the concepts pointed out in [Project Description](#project-description) section are executed in this module.
+3.   
