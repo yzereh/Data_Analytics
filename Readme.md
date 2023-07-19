@@ -81,6 +81,9 @@ In terms of methodologies, we will need to be familiar with basic ML and NLP tec
 <p align='center'> pip install -r your_path/requirements.txt</p> 
 
 '''
+```sh
+   git clone https://github.com/github_username/repo_name.git
+```
 
 
 Replace "your_path" with the path leading to the folder where you keep the requirements.txt file. 
