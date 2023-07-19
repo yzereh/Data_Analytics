@@ -10,7 +10,7 @@
 >  - [Main Collars](#main-collar)
 >  - [Prerequisites](#prerequisites)
 
-2. Installation
+2. [Installation](#installation)
 
 3. Usage
 
@@ -48,4 +48,32 @@ To work on this project, we will walk through or scratch the surface of the foll
 
 #### Prerequisites
 
-In terms of methodologies, you need to be familiar with ML and NLP techniques. For the required packages, everything is included in the [requirements.txt](/requirements.txt) file. 
+In terms of methodologies, we will need to be familiar with basic ML and NLP techniques. For the required packages, everything is included in the [requirements.txt](/requirements.txt) file which is laid out as follows:
+
+> - pandas
+> - numpy
+> - scikit-learn
+> - plotly 
+> - nltk 
+    - Our basic NLP techniques can be done using nltk
+> - fasttext 
+    - you might face some problems when installing this package. Instead, you could install fasttext-wheel
+> - fasttext-wheel
+    - fasttext or fastext-wheel will be used to detect the language of the text
+> - transformers 
+    - We will use this package for topic label generation which does not work very well in our case
+    - Also, we will use it to apply a sentence transformation model which will be useful to compute the semantic distance among the titles
+> - torch 
+    - torch is required in case we use Hugging Face
+### Installation
+---
+1. you need to clone the repository on your local machine. 
+
+2. To install the packages, you can either try installing each package separately or install all of them using this command:
+
+'''sh									
+<p align='center'> pip install -r your_path/requirements.txt</p> 
+
+'''
+
+Replace "your_path" with the path leading to the folder where you keep the requirements.txt file. 
