@@ -122,14 +122,14 @@ To perform the cleaning the ```process_clean_the_text()``` method is used which 
     ```
 > - $\color{rgb(216,118,0)}\large\textbf{params}$:
 
- >  >  >  **path_to_the_data**: it is the path to the folder containing the data [health_care_titles.txt](/health_care_titles.txt. 
+ >  >  >  **path_to_the_data**: it is the path to the folder containing the data. 
  >  >  >  it is a string and the default value is the constant variable MAIN_DIRECTORY which is defined in the [support.py](/support.py) module as:
     
    ```sh
       MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
    ```
  >  >  >  **Note**: Do not forget to add a $\color{rgb(216,118,0)}\normalsize{slash}$ to the end of the path.       
- >  >  >  **file_name**: this is the name of the file containing your data. In this project, it is a text file with each line containing the title of a paper
+ >  >  >  **file_name**: this is the name of the file containing your data. In this project, it is a text file with each line containing the title of a paper ([health_care_titles.txt](/health_care_titles.txt).
 
-> - $\color{rgb(216,118,0)}\large\textbf{return}$: the function returns a list whose elements are the paper titles
+> - $\color{rgb(216,118,0)}\large\textbf{return}$: the function returns a list whose elements are the paper titles.
 
