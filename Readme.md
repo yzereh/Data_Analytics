@@ -13,7 +13,7 @@
 
 3. [Structure](#Structure)
 
-4. [Codes Explanations](#codes-explanations)
+4. [Detailed Project Explanation](#detailed-project-explanation)
 </details>
 
 ### Project Description
@@ -99,3 +99,35 @@ The project contains four main modules.
 2. The cluster.py module has the main object that can be used to perform the clustering. In brief, all the concepts pointed out in [Project Description](#project-description) section are executed in this module.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Detailed Project Explanation
+
+---
+
+In this section, we will try to go through the details of all the necessary steps taken to complete the project. I will try to reasonably discuss the options that we have at every step and why we need to select one over the others. 
+
+As you know, when dealing with text data, there are several stages, but everything starts with cleaning. Depending on the context, cleaning can significantly vary. In our case, it consists of removing the signs, removing the numbers, removing the stopwords, and stemming each word. I tried to leave the stopwords removal and stemming optional since we do not need to do these operations in every application. Especially that we will have additional frequent words which do not necessarily help us cluster the titles. 
+
+To perform the cleaning the ```sh process_clean_the_text()``` method is used which can be found in the [cluster.py](/cluster.py) module. Let's break this function into some components and take a deeper look at each one.
+
+- **Load the data into memory**
+
+We have a simple function in [support.py](/support.py) module, which is called load_data(). Here is the function:
+
+```sh
+
+def load_data(path_to_the_data: str = MAIN_DIRECTORY, file_name: str = DATA_FILE_NAME):
+    with open(os.path.join(path_to_the_data, file_name), encoding='UTF-8') as titles:
+        read_lines_original = titles.readlines()
+    return read_lines_original
+
+```
+
+path_to_the_data: is the path to the folder containing the data [health_care_titles.txt](/health_care_titles.txt)
+it is a string and the default value is the constant variable MAIN_DIRECTORY which is defined in the [support.py](/support.py) module as:
+
+```sh
+
+MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
+ 
+'''
