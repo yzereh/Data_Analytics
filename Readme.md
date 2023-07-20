@@ -3,7 +3,7 @@
 <details>
 <summary>Table of Contents</summary>
  
-1. [Projet Description](#project-description)
+1. [Project Description](#project-description)
 
 >  - [Purpose of the Project](#purpose)
 >  - [Main Collars](#main-collars)
@@ -14,6 +14,8 @@
 3. [Structure](#structure)
 
 4. [Detailed Project Explanation](#detailed-project-explanation)
+
+5. [References](#references)
 </details>
 
 ### Project Description
@@ -133,3 +135,24 @@ To initiate the process, the ```process_clean_the_text()``` method is used which
 
 > - $\color{rgb(216,118,0)}\large\textbf{return}$: the function returns a list whose elements are the paper titles.
 
+
+- **Non-English Titles**
+
+    > After reading the data and striping each title, we need to make sure that we are keeping only english titles. That is because our purpose is to cluster the papers based on their semantic distance or lexicographical similarity; consequently, all titles should preferably be written in a unique language. To do this, I am going to use the [fasttext language identification](https://fasttext.cc/docs/en/language-identification.html) model. The model was trained using Wikipedia, Tatoeba and SETimes, used under CC-BY-SA, and it can recognize 176 languages [[1](#references), [2](#references)]. 
+
+
+### References
+
+1. $@article{joulin2016bag,
+  title={Bag of Tricks for Efficient Text Classification},
+  author={Joulin, Armand and Grave, Edouard and Bojanowski, Piotr and Mikolov, Tomas},
+  journal={arXiv preprint arXiv:1607.01759},
+  year={2016}
+}$
+
+2. $@article{joulin2016fasttext,
+  title={FastText.zip: Compressing text classification models},
+  author={Joulin, Armand and Grave, Edouard and Bojanowski, Piotr and Douze, Matthijs and J{\'e}gou, H{\'e}rve and Mikolov, Tomas},
+  journal={arXiv preprint arXiv:1612.03651},
+  year={2016}
+}$ 
