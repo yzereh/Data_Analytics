@@ -162,7 +162,10 @@ def is_the_language_english(documents: Union[str, Sequence[str], map]) -> List[s
 
 > - $\color{rgb(216,118,0)}\large\textbf{return}$: A list with the same length as that of the documents. If the title is in English, it will be kept; otherwise, it will be replaced by None. 
 
- >  >  >  **Note**: the get_fasttext_lang_detect_path() function is added to the [support.py](/support.py) module to make the model loading more flexible to potential changes. 
+ >  >  >  **Note 1**: the get_fasttext_lang_detect_path() function is added to the [support.py](/support.py) module to make the model loading more flexible to potential changes. 
+ 
+ >  >  >  **Note 2**: I left this step as an optional argument which can be selected by the analyst. The ```drop_non_english``` argument in the ```process_clean_the_text()``` method is a Boolean variable, and the default value is True.
+
   
 ```sh	 
 def get_fasttext_lang_detect_path(main_directory: str = MAIN_DIRECTORY, model_name: str =  FASTTEXT_LANGUAGE_DETECT_NAME) -> str:
@@ -170,6 +173,27 @@ def get_fasttext_lang_detect_path(main_directory: str = MAIN_DIRECTORY, model_na
 ```
 
 >  >  >  The model_name parameter is set to ```FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin' which is the language identification model, and it can be downloaded from [here](https://fasttext.cc/docs/en/language-identification.html). 
+
+
+- **Clean the Titles**
+
+    > The cleaning consists of three simple steps. 
+
+	  > Change to uppercase
+  
+```sh
+ read_lines = list(map(lambda each_line: each_line.upper() if each_line else None, read_lines))
+```  
+      > Remove the signs
+
+```sh
+read_lines = list(map(lambda each_line: re.sub(r"[^\w\s]", "", each_line) if each_line else None, read_lines))
+```
+	  > Remove the numbers
+
+```sh
+read_lines = list(map(lambda each_line: " ".join(re.findall("[A-Za-z]+", each_line)) if each_line else None, read_lines))
+```
 
 ### References
 
