@@ -116,22 +116,23 @@ To initiate the process, the ```process_clean_the_text()``` method is used which
 
     > We have a simple function in [support.py](/support.py) module, which is called ```load_data()```, and it is defined as:
 
-    ```sh
-     def load_data(path_to_the_data: str = MAIN_DIRECTORY, file_name: str = DATA_FILE_NAME):
-        with open(os.path.join(path_to_the_data, file_name), encoding='UTF-8') as titles:
-            read_lines_original = titles.readlines()
-        return read_lines_original
-    ```
+```sh
+def load_data(path_to_the_data: str = MAIN_DIRECTORY, file_name: str = DATA_FILE_NAME):
+	with open(os.path.join(path_to_the_data, file_name), encoding='UTF-8') as titles:
+		read_lines_original = titles.readlines()
+	return read_lines_original
+```
 > - $\color{rgb(216,118,0)}\large\textbf{params}$:
 
  >  >  >  **path_to_the_data**: it is the path to the folder containing the data. 
- >  >  >  it is a string and the default value is the constant variable MAIN_DIRECTORY which is defined in the [support.py](/support.py) module as:
-    
-   ```sh
-      MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
-   ```
+ >  >  >  it is a string and the default value is the constant variable MAIN_DIRECTORY which is defined in the [support.py](/support.py) module as
+
+```sh
+MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
+```
+
  >  >  >  **Note**: Do not forget to add a $\color{rgb(216,118,0)}\normalsize{slash}$ to the end of the path.       
- >  >  >  **file_name**: this is the name of the file containing your data. In this project, it is a text file with each line containing the title of a paper ([health_care_titles.txt](/health_care_titles.txt).
+ >  >  >  **file_name**: this is the name of the file containing your data. In this project, it is a text file with each line equivalent to a title [health_care_titles.txt](/health_care_titles.txt).
 
 > - $\color{rgb(216,118,0)}\large\textbf{return}$: the function returns a list whose elements are the paper titles.
 
@@ -142,33 +143,33 @@ To initiate the process, the ```process_clean_the_text()``` method is used which
   
 	> the ```is_the_language_english()``` function takes a string or a sequence of strings and evaluate the language of each text. 
 
-	```sh	
-	 def is_the_language_english(documents: Union[str, Sequence[str], map]) -> List[str]:
-	     try:
-	         import fasttext
-	         path_to_lang_model = get_fasttext_lang_detect_path()
-	         language_identification_model = fasttext.load_model(path_to_lang_model)
-	     except ModuleNotFoundError:
-	         raise Exception('The fasttext or fasttext-wheel library must be installed')
-	     except ValueError:
-	         raise Exception('Please provide a valid path for fasttext language identification model')
-       	 return [text if language_identification_model.predict(text, 1)[0][0][-2:] == 'en' else None for text in documents]
-	```
+```sh	
+def is_the_language_english(documents: Union[str, Sequence[str], map]) -> List[str]:
+	try:
+		import fasttext
+		path_to_lang_model = get_fasttext_lang_detect_path()
+		language_identification_model = fasttext.load_model(path_to_lang_model)
+	except ModuleNotFoundError:
+		raise Exception('The fasttext or fasttext-wheel library must be installed')
+	except ValueError:
+		raise Exception('Please provide a valid path for fasttext language identification model')
+	return [text if language_identification_model.predict(text, 1)[0][0][-2:] == 'en' else None for text in documents]
+```
 
 > - $\color{rgb(216,118,0)}\large\textbf{params}$:
 
- >  >  >  **document**: a string, a map or a sequence of strings. In our case, it is the list of titles. 
+ >  >  >  **documents**: a string, a map or a sequence of strings. In our case, it is the list of titles. 
 
 > - $\color{rgb(216,118,0)}\large\textbf{return}$: A list with the same length as that of the documents. If the title is in English, it will be kept; otherwise, it will be replaced by None. 
 
  >  >  >  **Note**: the get_fasttext_lang_detect_path() function is added to the [support.py](/support.py) module to make the model loading more flexible to potential changes. 
- 
-	```sh	 
-	 def get_fasttext_lang_detect_path(main_directory: str = MAIN_DIRECTORY, model_name: str =  FASTTEXT_LANGUAGE_DETECT_NAME) -> str:
-	 	return os.path.join(main_directory, model_name) 
-	```
+  
+```sh	 
+def get_fasttext_lang_detect_path(main_directory: str = MAIN_DIRECTORY, model_name: str =  FASTTEXT_LANGUAGE_DETECT_NAME) -> str:
+	return os.path.join(main_directory, model_name) 
+```
 
-  >  >  >  The model_name parameter is set to ```FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin' which is the language identification model, and it can be downloaded from [here](https://fasttext.cc/docs/en/language-identification.html). 
+>  >  >  The model_name parameter is set to ```FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin' which is the language identification model, and it can be downloaded from [here](https://fasttext.cc/docs/en/language-identification.html). 
 
 ### References
 
