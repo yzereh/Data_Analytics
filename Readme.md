@@ -138,8 +138,37 @@ To initiate the process, the ```process_clean_the_text()``` method is used which
 
 - **Non-English Titles**
 
-    > After reading the data and striping each title, we need to make sure that we are keeping only english titles. That is because our purpose is to cluster the papers based on their semantic distance or lexicographical similarity; consequently, all titles should preferably be written in a unique language. To do this, I am going to use the [fasttext language identification](https://fasttext.cc/docs/en/language-identification.html) model. The model was trained using Wikipedia, Tatoeba and SETimes, used under CC-BY-SA, and it can recognize 176 languages [[1](#references), [2](#references)]. 
+    > After reading the data and striping each title, we need to make sure that we are keeping only english titles. That is because our purpose is to cluster the papers based on their semantic distance or lexicographical similarity; consequently, all titles should preferably be written in a unique language. To do this, I am going to use the [fasttext language identification](https://fasttext.cc/docs/en/language-identification.html) model. The model was trained using Wikipedia, Tatoeba and SETimes, and it can recognize 176 languages [[1](#references), [2](#references)]. 
+  
+	> the ```is_the_language_english()``` function takes a string or a sequence of strings and evaluate the language of each text. 
 
+	```sh	
+	 def is_the_language_english(documents: Union[str, Sequence[str], map]) -> List[str]:
+	     try:
+	         import fasttext
+	         path_to_lang_model = get_fasttext_lang_detect_path()
+	         language_identification_model = fasttext.load_model(path_to_lang_model)
+	     except ModuleNotFoundError:
+	         raise Exception('The fasttext or fasttext-wheel library must be installed')
+	     except ValueError:
+	         raise Exception('Please provide a valid path for fasttext language identification model')
+       	 return [text if language_identification_model.predict(text, 1)[0][0][-2:] == 'en' else None for text in documents]
+	```
+
+> - $\color{rgb(216,118,0)}\large\textbf{params}$:
+
+ >  >  >  **document**: a string, a map or a sequence of strings. In our case, it is the list of titles. 
+
+> - $\color{rgb(216,118,0)}\large\textbf{return}$: A list with the same length as that of the documents. If the title is in English, it will be kept; otherwise, it will be replaced by None. 
+
+ >  >  >  **Note**: the get_fasttext_lang_detect_path() function is added to the [support.py](/support.py) module to make the model loading more flexible to potential changes. 
+ 
+	```sh	 
+	 def get_fasttext_lang_detect_path(main_directory: str = MAIN_DIRECTORY, model_name: str =  FASTTEXT_LANGUAGE_DETECT_NAME) -> str:
+	 	return os.path.join(main_directory, model_name) 
+	```
+
+  >  >  >  The model_name parameter is set to ```FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin' which is the language identification model, and it can be downloaded from [here](https://fasttext.cc/docs/en/language-identification.html). 
 
 ### References
 
