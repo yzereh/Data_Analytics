@@ -108,7 +108,7 @@ In this section, we will try to go through the details of all the necessary step
 
 As you know, when dealing with text data, there are several stages, but everything starts with cleaning. Depending on the context, cleaning can significantly vary. In our case, it consists of removing the signs, removing the numbers, removing the stopwords, and stemming each word. I tried to leave the stopwords removal and stemming optional since we do not need to do these operations in every application. Especially that we will have additional frequent words which do not necessarily help us cluster the titles. 
 
-To perform the cleaning the ```process_clean_the_text()``` method is used which can be found in the [cluster.py](/cluster.py) module. Let's break this function into some components and take a deeper look at each one.
+To initiate the process, the ```process_clean_the_text()``` method is used which can be found in the [cluster.py](/cluster.py) module. Let's break this function into some components and take a deeper look at each one.
 
 - **Load the data into memory**
 
