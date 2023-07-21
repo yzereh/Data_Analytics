@@ -218,24 +218,22 @@ if stem_the_words:
 	> At this point, you might think why do not we use the TF-IDF vectorizer instead of spending some time finding these frequent words brining no insight to our clustering. I agree with you! We can definitely use this vectorizer and skip the process of finding frequent words, but I have two arguments against this method for our application. 
 	
 	> 1. What if we want to use another type of word-to-vec transforms, like Embeddings?
-	> 2. I used TF-IDF, and I found that manually finding and removing frequent words yield better results in this case thst our documents are small and we are lokking for more accurate clusters. 
+	> 2. I used TF-IDF, and I found that manually finding and removing frequent words yield better results, for our documents are small, and we are looking for more accurate clusters. 
 	
 	> Note that both these arguments might be completely wrong for another application, and you might find TF-IDF very effective in your work especially if you are working with very large documents.   
    
 ```sh
 if remove_stop_words:
-    print('Removing stopwords.')
     stop_words = get_stop_words(add_extra_frequent_words, remove_stop_word_signs,
                                 extra_frequent_words_categories, stem_the_words)
     read_lines = list(map(
         lambda each_line: " ".join(each_word for each_word in each_line.split()
                                    if each_word
                                    not in stop_words) if each_line else None, read_lines))
-    print('Stopwords removed.')
 self.titles_stopwords_removed = read_lines
 ```
 
-> > > Again remove_stop_words is a Boolean and can be set by the analyst. Note that we have a ```get_stop_words()``` function with some arguments which need to be discussed ([support.py](/support.py)). 
+> > > Again, the ```remove_stop_words``` is a Boolean variable and can be set by the analyst. Note that the major finction is ```get_stop_words()``` which can be found in the [support.py](/support.py) module. It takes some information from the user and returns the list of stopwprds to be removed from the text. 
 
 ```sh
 def get_stop_words(add_extra_frequent_words: bool, extra_frequent_words_categories, remove_stop_word_signs: bool, stem_the_words):
@@ -252,7 +250,9 @@ def get_stop_words(add_extra_frequent_words: bool, extra_frequent_words_categori
     return stop_words
 ```
 
-> > > The first two arguments of this function are fed to another function called ```get_frequent_words()```:
+> - $\color{rgb(216,118,0)}\large\textbf{params}$:
+
+ > > > The first two arguments of this function are fed to another function called ```get_frequent_words()``` which gets the path and the categories of the frequent words and returns the list of frequent words associated with the given categories.
 
 ```sh
 def get_frequent_words(path_to_additional_frequent_words: str,
@@ -279,14 +279,16 @@ def get_frequent_words(path_to_additional_frequent_words: str,
                                 f"{FREQUENT_WORDS_CATEGORIES}")
 ```
 
+ > - $\color{rgb(216,118,0)}\large\textbf{params}$:
 
-> - $\color{rgb(216,118,0)}\large\textbf{params}$:
+  >  >  >  **path_to_additional_frequent_words**: a string showing the path to [additional_frequent_words.json](/additional_frequent_words.json) file, and it is obtained using the function 
+  ```get_extra_frequent_words_path()```.
 
- >  >  >  **path_to_additional_frequent_words**: a string showing the path to [additional_frequent_words.json](/additional_frequent_words.json) file, and it is obtained using the function ```get_extra_frequent_words_path()```.
+  >  >  >  **categories**: a string or a sequence of strings giving the categories of the additional frequent words to be removed from the text. The default is "all" meaning that the frequent words for all categories 
+  will be removed. If someone wants to remove the frequent words associated with the "health" and "general" categories only, this can be specified as ```categories = ["health", "general"]```. 
 
- >  >  >  **categories**: a string or a sequence of strings giving the categories of the additional frequent words to be removed from the text. The default is "all" meaning that the frequent words for all categories will be removed. If someone wants to remove the "health" and "general" categories, this can be specified as ```categories = ["health", "general"]```. 
-
- >  >  > The third argument of the function ```get_stop_words()``` (```remove_stop_word_signs```) is given to another function defined as : 
+>  >  > The third argument of the function ```get_stop_words()``` (```remove_stop_word_signs```) is given to the ```download_load_stop_words``` function which downloads and extends the stopwords and removes the signs 
+from the stopwords if needed. The final output would be the list of stopwords and the optional frequent words.
  
 ```sh
 def download_load_stop_words(remove_signs: bool = True, extra_frequent_words: List[str] = None) -> List:
@@ -306,16 +308,17 @@ def download_load_stop_words(remove_signs: bool = True, extra_frequent_words: Li
     return stop_words
 ```
 
+ > - $\color{rgb(216,118,0)}\large\textbf{params}$:
+
  >  >  >  **remove_stop_word_signs**: a Boolean specifying whether or not to remove the signs from stopwords.
  
  >  >  >  **extra_frequent_words**: the list of frequent words to be removed. It is defined within the ```get_stop_words()``` function as:
 
 ```sh
-extra_frequent_words = get_frequent_words(path_to_extra_frequent_words,
-                                                  extra_frequent_words_categories)
+extra_frequent_words = get_frequent_words(path_to_extra_frequent_words, extra_frequent_words_categories)
 ```
 
- >  >  > The last argument of the ```get_stop_words()``` function is **stem_the_words** which is a Boolean showing whether or not the stopwords must be stemmed. 
+>  >  > The last argument of the ```get_stop_words()``` function is **stem_the_words** which is a Boolean variable determining whether or not the stopwords must be stemmed. 
 
 ### References
 
