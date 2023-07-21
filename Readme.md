@@ -213,7 +213,7 @@ if stem_the_words:
 
     > The standard English stopwards can be simply removed and they exist in almost all standrad NLP packages. However, based on my experience working with text data and depending on the context, I typically find a group of frequently-used words which do not serve the purpose of the project. Let's take a deeper look at our case. If you go throug our papers, you will find words, such as machine, learning, data, mining, hospital, patient, records, settings, software, app, healthcare, etc., thar are used very frequently. 
     
-	> If we leave these words, they will probably dominate the topics of some clusters. But, does it make sense to have a cluster with the topic "machine learning" and another with the topic "patients"? Most likely, I would say no, because these are the most general and the initial search topics. Recall that our initial search was "Machine Learning in Healthcare". As a result, I would say that we can usually find these words depending on the application and get rid of them. I built a JSON document [additional_frequent_words.json](/additional_frequent_words.json) where you can take a look at the frequent words that I found. Offcourse, you can add or remove some words based on your purpose and the application that you are dealing with.
+	> If we leave these words, they will probably dominate the topics of some clusters. But, does it make sense to have a cluster with the topic "machine learning" and another with the topic "patients"? Most likely, I would say no, because these are the most general and the initial search topics. Recall that our initial search was "Machine Learning in Healthcare". As a result, I would say that we can usually find these words depending on the application and get rid of them. I built a JSON document [additional_frequent_words.json](/additional_frequent_words.json) where you can take a look at the frequent words that I found. Offcourse, you can add or remove some words based on your purpose and the application that you are dealing with. The file contains four categories and their associated frequent words. The categories are: **health**, **analytics**, **general**, and **information technology**. One can choose "all", one or a subset of categories to remove their corresponding words from the text. 
 	
 	> At this point, you might think why do not we use the TF-IDF vectorizer instead of spending some time finding these frequent words brining no insight to our clustering. I agree with you! We can definitely use this vectorizer and skip the process of finding frequent words, but I have two arguments against this method for our application. 
 	
@@ -234,6 +234,88 @@ if remove_stop_words:
     print('Stopwords removed.')
 self.titles_stopwords_removed = read_lines
 ```
+
+> > > Again remove_stop_words is a Boolean and can be set by the analyst. Note that we have a ```get_stop_words()``` function with some arguments which need to be discussed ([support.py](/support.py)). 
+
+```sh
+def get_stop_words(add_extra_frequent_words: bool, extra_frequent_words_categories, remove_stop_word_signs: bool, stem_the_words):
+    extra_frequent_words = None
+    if add_extra_frequent_words:
+        path_to_extra_frequent_words = get_extra_frequent_words_path()
+        extra_frequent_words = get_frequent_words(path_to_extra_frequent_words,
+                                                  extra_frequent_words_categories)
+    stop_words = download_load_stop_words(remove_stop_word_signs, extra_frequent_words)
+    stop_words = list(map(lambda x: x.upper(), stop_words))
+    if stem_the_words:
+        stemmer = SnowballStemmer("english")
+        stop_words = list(map(lambda x: stemmer.stem(x).upper(), stop_words))
+    return stop_words
+```
+
+> > > The first two arguments of this function are fed to another function called ```get_frequent_words()```:
+
+```sh
+def get_frequent_words(path_to_additional_frequent_words: str,
+                       categories: Union[str, Sequence[str]] = 'all') -> List:
+    frequent_words_by_category = json_load(path_to_additional_frequent_words)
+    list_frequent_words = []
+    if categories == 'all':
+        all_frequent_words = reduce(lambda x, y: x + y, frequent_words_by_category.values())
+        return all_frequent_words
+    else:
+        if isinstance(categories, Sequence):
+            for each_category in categories:
+                if each_category in frequent_words_by_category.keys():
+                    list_frequent_words.extend(frequent_words_by_category.get(each_category))
+                else:
+                    raise Exception(f"Couldn't find the key. Please choose from one of these categories: "
+                                    f"{FREQUENT_WORDS_CATEGORIES}")
+            return list_frequent_words
+        else:
+            if categories in frequent_words_by_category.keys():
+                return frequent_words_by_category.get(categories)
+            else:
+                raise Exception(f"Couldn't find the key. Please choose from one of these categories: "
+                                f"{FREQUENT_WORDS_CATEGORIES}")
+```
+
+
+> - $\color{rgb(216,118,0)}\large\textbf{params}$:
+
+ >  >  >  **path_to_additional_frequent_words**: a string showing the path to [additional_frequent_words.json](/additional_frequent_words.json) file, and it is obtained using the function ```get_extra_frequent_words_path()```.
+
+ >  >  >  **categories**: a string or a sequence of strings giving the categories of the additional frequent words to be removed from the text. The default is "all" meaning that the frequent words for all categories will be removed. If someone wants to remove the "health" and "general" categories, this can be specified as ```categories = ["health", "general"]```. 
+
+ >  >  > The third argument of the function ```get_stop_words()``` (```remove_stop_word_signs```) is given to another function defined as : 
+ 
+```sh
+def download_load_stop_words(remove_signs: bool = True, extra_frequent_words: List[str] = None) -> List:
+    try:
+        stop_words = stopwords.words("english")
+    except LookupError:
+        import nltk
+        nltk.download("stopwords")
+        stop_words = stopwords.words("english")
+
+    if extra_frequent_words:
+        stop_words.extend(extra_frequent_words)
+
+    if remove_signs:
+        stop_words = list(map(lambda x: re.sub(r"[^\w\s]", "", x), stop_words))
+
+    return stop_words
+```
+
+ >  >  >  **remove_stop_word_signs**: a Boolean specifying whether or not to remove the signs from stopwords.
+ 
+ >  >  >  **extra_frequent_words**: the list of frequent words to be removed. It is defined within the ```get_stop_words()``` function as:
+
+```sh
+extra_frequent_words = get_frequent_words(path_to_extra_frequent_words,
+                                                  extra_frequent_words_categories)
+```
+
+ >  >  > The last argument of the ```get_stop_words()``` function is **stem_the_words** which is a Boolean showing whether or not the stopwords must be stemmed. 
 
 ### References
 
