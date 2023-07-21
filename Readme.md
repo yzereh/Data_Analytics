@@ -195,8 +195,31 @@ read_lines = list(map(lambda each_line: re.sub(r"[^\w\s]", "", each_line) if eac
 read_lines = list(map(lambda each_line: " ".join(re.findall("[A-Za-z]+", each_line)) if each_line else None, read_lines))
 ```
 
+- **Stemming**
+
+    > This is another optional step which I found useful in this application. As you know, it is a very standard operation used in mant text analytics applications. An example would clarify the situation to a large extent. Consider the words prediction, predictive, predict, predicting and predictory. Does it make sense to assume that each of these words can be the subject of a new cluster? In some cases, the answer is yes. But in this case, we tend to cluster the papers based on more generic topics. For instance, one cluster might be text mining and the other can be disease treatments, etc. So in our application, it might make better sense to stem all these words and replace them by $\color{rgb(216,118,0)}\large\textbf{predict}$. There are several stemming algorithms, but I chose to use the [Snowball Stemmer](https://snowballstem.org/). 
+
+```sh
+if stem_the_words:
+    print('Stemming the words.')
+    stemmer = SnowballStemmer("english")
+    read_lines = \
+        list(map(lambda each_line: " ".join(stemmer.stem(each_word).upper()
+                                            for each_word in each_line.split()) if each_line else None, read_lines))
+```
+
+
+- **Stopwords and Frequent words Removal**
+
+    > The standard English stopwards can be simply removed and they exist in almost all standrad NLP packages. However, based on my experience working with text and depending on the context, I typically find a group of frequently used words which does not serve the purpose of the project. Let's take a deeper look at our case. If you go throug our papers, you will find words, such as machine, learning, data, mining, hospital, patient, records, settings, software, app, healthcare, etc., are used very frequently. 
+    
+	> If we leave these words, they will probably dominate the topics of some clusters. But, does it make sense to have a cluster with the topic "machine learning" and another with the topic "patients"? Most likely, I would say no, because these are the most general and the initial search topics. Recall that our initial search was "Machine Learning in Healthcare". As a result, I would say that we can usually find these words depending on the application and get rid of them. I buuilt a JSON document [additional_frequent_words.json](/additional_frequent_words.json) where you can load and take a look the frequent words that I found. Offcourse, you can add or remove words based on your purpose and application.  
+
+
 ### References
 
 [1] A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, Bag of Tricks for Efficient Text Classification
 
 [2] A. Joulin, E. Grave, P. Bojanowski, M. Douze, H. Jégou, T. Mikolov, FastText.zip: Compressing text classification models
+
+
