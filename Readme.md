@@ -172,25 +172,25 @@ def get_fasttext_lang_detect_path(main_directory: str = MAIN_DIRECTORY, model_na
 	return os.path.join(main_directory, model_name) 
 ```
 
->  >  >  The model_name parameter is set to ```FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin' which is the language identification model, and it can be downloaded from [here](https://fasttext.cc/docs/en/language-identification.html). 
+>  >  >  The model_name parameter is set to ```FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin'``` which is the language identification model, and it can be downloaded from [here](https://fasttext.cc/docs/en/language-identification.html). 
 
 
 - **Clean the Titles**
 
-    > The cleaning consists of three simple steps. 
+    > Cleaning consists of three simple steps:
 
-	  > Change to uppercase
+     > - Change to uppercase
+     > - Remove the signs
+     > - Remove the numbers
   
 ```sh
- read_lines = list(map(lambda each_line: each_line.upper() if each_line else None, read_lines))
-```  
-      > Remove the signs
+read_lines = list(map(lambda each_line: each_line.upper() if each_line else None, read_lines))
+``` 
 
 ```sh
 read_lines = list(map(lambda each_line: re.sub(r"[^\w\s]", "", each_line) if each_line else None, read_lines))
 ```
-	  > Remove the numbers
-
+ 
 ```sh
 read_lines = list(map(lambda each_line: " ".join(re.findall("[A-Za-z]+", each_line)) if each_line else None, read_lines))
 ```
