@@ -214,8 +214,26 @@ if stem_the_words:
     > The standard English stopwards can be simply removed and they exist in almost all standrad NLP packages. However, based on my experience working with text data and depending on the context, I typically find a group of frequently-used words which do not serve the purpose of the project. Let's take a deeper look at our case. If you go throug our papers, you will find words, such as machine, learning, data, mining, hospital, patient, records, settings, software, app, healthcare, etc., thar are used very frequently. 
     
 	> If we leave these words, they will probably dominate the topics of some clusters. But, does it make sense to have a cluster with the topic "machine learning" and another with the topic "patients"? Most likely, I would say no, because these are the most general and the initial search topics. Recall that our initial search was "Machine Learning in Healthcare". As a result, I would say that we can usually find these words depending on the application and get rid of them. I built a JSON document [additional_frequent_words.json](/additional_frequent_words.json) where you can take a look at the frequent words that I found. Offcourse, you can add or remove some words based on your purpose and the application that you are dealing with.
+	
+	> At this point, you might think why do not we use the TF-IDF vectorizer instead of spending some time finding these frequent words brining no insight to our clustering. I agree with you! We can definitely use this vectorizer and skip the process of finding frequent words, but I have two arguments against this method for our application. 
+	
+	> 1. What if we want to use another type of word-to-vec transforms, like Embeddings?
+	> 2. I used it, and I found that manually finding and removing frequent words yield better results in this case. 
+	
+	> Note thta both these arguments might be completely wrong for another application, and you might find TF-IDF very effective in your work especially if you are working with very large documents.   
    
-
+```sh
+if remove_stop_words:
+    print('Removing stopwords.')
+    stop_words = get_stop_words(add_extra_frequent_words, remove_stop_word_signs,
+                                extra_frequent_words_categories, stem_the_words)
+    read_lines = list(map(
+        lambda each_line: " ".join(each_word for each_word in each_line.split()
+                                   if each_word
+                                   not in stop_words) if each_line else None, read_lines))
+    print('Stopwords removed.')
+self.titles_stopwords_removed = read_lines
+```
 
 ### References
 
