@@ -161,7 +161,7 @@ def is_the_language_english(documents: Union[str, Sequence[str], map]) -> List[s
 
  >  >  >  **documents**: a string, a map or a sequence of strings. In our case, it is the list of titles. 
 
-> - $\color{rgb(216,118,0)}\large\textbf{return}$: A list with the same length as that of the documents. If the title is in English, it will be kept; otherwise, it will be replaced by None. 
+> - $\color{rgb(216,118,0)}\large\textbf{return}$: A list with the same length as that of the documents. If the title is in English, it will be kept; otherwise, it will be replaced by ```None```. 
 
  >  >  >  **Note 1**: the get_fasttext_lang_detect_path() function is added to the [support.py](/support.py) module to make the model loading more flexible to potential changes. 
  
@@ -326,11 +326,14 @@ extra_frequent_words = get_frequent_words(path_to_extra_frequent_words, extra_fr
 
 >  >  > The last argument of the ```get_stop_words()``` function is **stem_the_words** which is a Boolean variable determining whether or not the stopwords must be stemmed. 
 
+
+>  >  > **Note**: When removng the stopwords, some of the titles might be removed completely. In this case, we will have an empty string ```''``` which will be replaced by ```None``` at the last step. 
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 - **Duplicates**
 
-	> Since our data were originally scraped from the google scholar website, chances are high that it contains some duplicates. In this step, we would like to find the duplicates, keep the first one and replace the rest by Nones. At the end, we will deal with these Nones, but for now, we would like to just spot them. To this end, we added the ```find_duplicates()``` function to the support.py module. The function takes the collection of titles (a sequence or map) as its input and returns a tuple ```tuple[dict[str, list[int]], int]``` containing two elements. The first element is a dictionary of duplicates with the duplicated titles as keys and their associated location in the original data as values. The second element is an integer showing the number of duplicates in the data. 
+	> Since our data were originally scraped from the google scholar website, chances are high that it contains some duplicates. In this step, we would like to find the duplicates, keep the first one and replace the rest by ```None```. At the end, we will deal with these ```None```, but for now, we would like to just spot them. To this end, we added the ```find_duplicates()``` function to the support.py module. The function takes the collection of titles (a sequence or map) as its input and returns a tuple ```tuple[dict[str, list[int]], int]``` containing two elements. The first element is a dictionary of duplicates with the duplicated titles as keys and their associated location in the original data as values. The second element is an integer showing the number of duplicates in the data. 
 
 ```sh
 def find_duplicates(collection_of_titles: Union[Sequence[str], map]) -> tuple[dict[str, list[int]], int]:
@@ -360,7 +363,7 @@ def find_duplicates(collection_of_titles: Union[Sequence[str], map]) -> tuple[di
  
  > - $\color{rgb(216,118,0)}\large\textrm{return}$: a tuple including a dictionary of duplicates with their locations and the duplicates count
  
-> > Next, the output of the function is used to locate all the duplicates and replace them with None.
+> > Next, the output of the function is used to locate all the duplicates and replace them with ```None```.
 
 ```sh
 self.duplicated_with_indices, self.duplicates_count = find_duplicates(read_lines)
@@ -368,11 +371,23 @@ if self.duplicates_count > 0:
     print('Finding the duplicates.')
     logging.warning(f'There are {self.duplicates_count} duplicates in the titles. '
                     f'All duplicates will be replaced by None.')
-
     for each_list_of_indices in self.duplicated_with_indices.values():
         for each_index in each_list_of_indices[1:]:
             read_lines[each_index] = None
 ```  
+
+> > In the last step in the ```process_clean_the_text()``` method; as pointed out in the previous section, the empty string ```''``` will be replaced by ```None```. 
+
+```sh
+read_lines = list(map(lambda each_line: None if each_line == '' and each_line is not None else each_line, read_lines))
+```
+
+$\color{rgb(216,118,0)}\large\textrm{return}$: ```process_clean_the_text()``` method returns a dictionary with two keys: 1. the collection of original titles that are not even touched, these are going to be used to retrieve the original titles of the paper for the final visualization, and 2. The cleaned titles that can be used in the subsequent steps.
+
+```sh
+print('##### Done with cleaning and preprocessing #####')
+return {support.CLEANED_TITLES_NAME: read_lines, support.ORIGINAL_TITLES_NAME: self.read_lines_original}
+```    
 
 ### References
 
