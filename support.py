@@ -218,7 +218,7 @@ def huggingface_sentence_transform(sequence_of_sentences: Union[Sequence[str], s
         return pooled_sentence_transforms
 
 
-def load_data():
-    with open(os.path.join(MAIN_DIRECTORY, DATA_FILE_NAME), encoding='UTF-8') as titles:
+def load_data(path_to_the_data: str = MAIN_DIRECTORY, file_name: str = DATA_FILE_NAME):
+    with open(os.path.join(path_to_the_data, file_name), encoding='UTF-8') as titles:
         read_lines_original = titles.readlines()
     return read_lines_original
