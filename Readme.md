@@ -112,7 +112,7 @@ As you know, when dealing with text data, there are several stages, but everythi
 
 To facilitate the potential usage of the project in the future, we tried to build the ClusterTitles class with two major methods inside the [cluster.py](/cluster.py) module. The first method which performs the cleaning and preprocessing is called  ```process_clean_the_text()```, and the second one is ```cluster_the_titles()``` method, and its function is to apply ```process_clean_the_text()``` method on the loaded data, transform the cleaned data to vectors, and cluster the titles. Figure 1 lays out the structure of the project and the interrelations of modules, classes, methods and functions.   
 
-![My Image](/programming_structure.emf)
+<img src="/programming_structure.jpg" alt="Alt text" title="Figure 1">
 
 I will try to break ```process_clean_the_text()``` methid into its building blocks and take a deeper look at each one.
 
