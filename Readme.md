@@ -110,7 +110,9 @@ In this section, we will try to go through the details of all the necessary step
 
 As you know, when dealing with text data, there are several stages, but everything starts with cleaning. Depending on the context, cleaning can significantly vary. In our case, it consists of removing the signs, removing the numbers, removing the stopwords, and stemming each word. I tried to leave the stopwords removal and stemming optional since we do not need to do these operations in every application. Especially that we will have additional frequent words which do not necessarily help us cluster the titles. 
 
-To initiate the process, the ```process_clean_the_text()``` method is used which can be found in the [cluster.py](/cluster.py) module. Let's break this function into some components and take a deeper look at each one.
+To facilitate the potential usage of the project in the future, we tried to build the ClusterTitles class with two major methods inside the [cluster.py](/cluster.py) module. The first method which performs the cleaning and preprocessing is called  ```process_clean_the_text()```, and the second one is ```cluster_the_titles()``` method, and its function is to apply ```process_clean_the_text()``` method on the loaded data, transform the cleaned data to vectors, and cluster the titles. Figure 1 lays out the structure of the project and the interrelations of modelues, classes, methods and functions.   
+
+I will try to break ```process_clean_the_text()``` methid into its building blocks and take a deeper look at each one.
 
 - **Load the data into memory**
 
@@ -382,7 +384,7 @@ if self.duplicates_count > 0:
 read_lines = list(map(lambda each_line: None if each_line == '' and each_line is not None else each_line, read_lines))
 ```
 
-$\color{rgb(216,118,0)}\large\textrm{return}$: ```process_clean_the_text()``` method returns a dictionary with two keys: 1. the collection of original titles that are not even touched, these are going to be used to retrieve the original titles of the paper for the final visualization, and 2. The cleaned titles that can be used in the subsequent steps.
+$\color{rgb(216,118,0)}\large\textrm{return}$: ```process_clean_the_text()``` method returns a dictionary with two keys: 1. the collection of original titles that are not even touched. These are going to be used to retrieve the original titles for the final visualization, and 2. The cleaned titles that can be used in the subsequent steps.
 
 ```sh
 print('##### Done with cleaning and preprocessing #####')
