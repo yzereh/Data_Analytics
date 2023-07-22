@@ -122,7 +122,7 @@ def load_data(path_to_the_data: str = MAIN_DIRECTORY, file_name: str = DATA_FILE
 		read_lines_original = titles.readlines()
 	return read_lines_original
 ```
-> - $\color{rgb(216,118,0)}\large\textbf{params}$:
+> - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
  >  >  >  **path_to_the_data**: it is the path to the folder containing the data. 
  >  >  >  it is a string and the default value is the constant variable MAIN_DIRECTORY which is defined in the [support.py](/support.py) module as
@@ -157,7 +157,7 @@ def is_the_language_english(documents: Union[str, Sequence[str], map]) -> List[s
 	return [text if language_identification_model.predict(text, 1)[0][0][-2:] == 'en' else None for text in documents]
 ```
 
-> - $\color{rgb(216,118,0)}\large\textbf{params}$:
+> - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
  >  >  >  **documents**: a string, a map or a sequence of strings. In our case, it is the list of titles. 
 
@@ -256,7 +256,7 @@ def get_stop_words(add_extra_frequent_words: bool, extra_frequent_words_categori
     return stop_words
 ```
 
-> - $\color{rgb(216,118,0)}\large\textbf{params}$:
+> - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
  > > > The first two arguments of this function are fed to another function called ```get_frequent_words()``` which gets the path and the categories of the frequent words and returns the list of frequent words associated with the given categories.
 
@@ -285,7 +285,7 @@ def get_frequent_words(path_to_additional_frequent_words: str,
                                 f"{FREQUENT_WORDS_CATEGORIES}")
 ```
 
- > - $\color{rgb(216,118,0)}\large\textbf{params}$:
+ > - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
   >  >  >  **path_to_additional_frequent_words**: a string showing the path to [additional_frequent_words.json](/additional_frequent_words.json) file, and it is obtained using the function 
   ```get_extra_frequent_words_path()```.
@@ -314,7 +314,7 @@ def download_load_stop_words(remove_signs: bool = True, extra_frequent_words: Li
     return stop_words
 ```
 
- > - $\color{rgb(216,118,0)}\large\textbf{params}$:
+ > - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
  >  >  >  **remove_stop_word_signs**: a Boolean specifying whether or not to remove the signs from stopwords.
  
@@ -330,7 +330,7 @@ extra_frequent_words = get_frequent_words(path_to_extra_frequent_words, extra_fr
 
 - **Duplicates**
 
-	> Since our data were originally scraped from the google scholar website, chances are high that it contains some duplicates. In this step, we would like to find the duplicates, keep the first one and replace the rest by Nones. At the end, we will deal with these Nones, but for now, we would like to just replace the duplicates by Nones. To this end, we added the ```find_duplicates()``` function to the support.py module. The function takes the collection of titles (a sequence or map) as its input and returns a tuple ```tuple[dict[str, list[int]], int]``` containing two elements. The first element is a dictionary of duplicates with the duplicated titles as keys and their associated location in the original data as values. The second element is an integer showing the number of duplicates in the data. 
+	> Since our data were originally scraped from the google scholar website, chances are high that it contains some duplicates. In this step, we would like to find the duplicates, keep the first one and replace the rest by Nones. At the end, we will deal with these Nones, but for now, we would like to just spot them. To this end, we added the ```find_duplicates()``` function to the support.py module. The function takes the collection of titles (a sequence or map) as its input and returns a tuple ```tuple[dict[str, list[int]], int]``` containing two elements. The first element is a dictionary of duplicates with the duplicated titles as keys and their associated location in the original data as values. The second element is an integer showing the number of duplicates in the data. 
 
 ```sh
 def find_duplicates(collection_of_titles: Union[Sequence[str], map]) -> tuple[dict[str, list[int]], int]:
@@ -354,13 +354,13 @@ def find_duplicates(collection_of_titles: Union[Sequence[str], map]) -> tuple[di
     return duplicated_with_indices, duplicates_count
 ```
 
- > - $\color{rgb(216,118,0)}\large\textbf{params}$:
+ > - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
  >  >  >  **collection_of_titles**: the sequence of cleaned titles. 
  
- >  >  >  **returns**: a tuple including a dictionary of duplicates with their locations and the duplicates count
+ > - $\color{rgb(216,118,0)}\large\textrm{return}$: a tuple including a dictionary of duplicates with their locations and the duplicates count
  
-> > > Next, the output of the function id used to locate all the duplicates and replace them with None.
+> > Next, the output of the function is used to locate all the duplicates and replace them with None.
 
 ```sh
 self.duplicated_with_indices, self.duplicates_count = find_duplicates(read_lines)
