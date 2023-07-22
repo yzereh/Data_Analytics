@@ -136,6 +136,7 @@ MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
 
 > - $\color{rgb(216,118,0)}\large\textbf{return}$: the function returns a list whose elements are the paper titles.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 - **Non-English Titles**
 
@@ -174,6 +175,7 @@ def get_fasttext_lang_detect_path(main_directory: str = MAIN_DIRECTORY, model_na
 
 >  >  >  The model_name parameter is set to ```FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin'``` which is the language identification model, and it can be downloaded from [here](https://fasttext.cc/docs/en/language-identification.html). 
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 - **Clean the Titles**
 
@@ -194,6 +196,7 @@ read_lines = list(map(lambda each_line: re.sub(r"[^\w\s]", "", each_line) if eac
 ```sh
 read_lines = list(map(lambda each_line: " ".join(re.findall("[A-Za-z]+", each_line)) if each_line else None, read_lines))
 ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 - **Stemming**
 
@@ -208,6 +211,7 @@ if stem_the_words:
                                             for each_word in each_line.split()) if each_line else None, read_lines))
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 - **Stopwords and Frequent words Removal**
 
@@ -232,6 +236,8 @@ if remove_stop_words:
                                    not in stop_words) if each_line else None, read_lines))
 self.titles_stopwords_removed = read_lines
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 > > > Again, the ```remove_stop_words``` is a Boolean variable and can be set by the analyst. Note that the major finction is ```get_stop_words()``` which can be found in the [support.py](/support.py) module. It takes some information from the user and returns the list of stopwprds to be removed from the text. 
 
@@ -319,6 +325,54 @@ extra_frequent_words = get_frequent_words(path_to_extra_frequent_words, extra_fr
 ```
 
 >  >  > The last argument of the ```get_stop_words()``` function is **stem_the_words** which is a Boolean variable determining whether or not the stopwords must be stemmed. 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+- **Duplicates**
+
+	> Since our data were originally scraped from the google scholar website, chances are high that it contains some duplicates. In this step, we would like to find the duplicates, keep the first one and replace the rest by Nones. At the end, we will deal with these Nones, but for now, we would like to just replace the duplicates by Nones. To this end, we added the ```find_duplicates()``` function to the support.py module. The function takes the collection of titles (a sequence or map) as its input and returns a tuple ```tuple[dict[str, list[int]], int]``` containing two elements. The first element is a dictionary of duplicates with the duplicated titles as keys and their associated location in the original data as values. The second element is an integer showing the number of duplicates in the data. 
+
+```sh
+def find_duplicates(collection_of_titles: Union[Sequence[str], map]) -> tuple[dict[str, list[int]], int]:
+    index = -1
+    duplicates_count = 0
+    collection_of_titles_by_indices = {}
+    duplicated_with_indices = {}
+    for each_title in collection_of_titles:
+        index += 1
+        if collection_of_titles_by_indices.get(each_title, 'not_here') != 'not_here':
+            collection_of_titles_by_indices[each_title].append(index)
+            if each_title is not None and each_title != '':
+                duplicates_count += 1
+                try:
+                    duplicated_with_indices[each_title].append(index)
+                except KeyError:
+                    duplicated_with_indices[each_title] = [collection_of_titles.index(each_title)]
+                    duplicated_with_indices[each_title].append(index)
+        else:
+            collection_of_titles_by_indices[each_title] = [index]
+    return duplicated_with_indices, duplicates_count
+```
+
+ > - $\color{rgb(216,118,0)}\large\textbf{params}$:
+
+ >  >  >  **collection_of_titles**: the sequence of cleaned titles. 
+ 
+ >  >  >  **returns**: a tuple including a dictionary of duplicates with their locations and the duplicates count
+ 
+> > > Next, the output of the function id used to locate all the duplicates and replace them with None.
+
+```sh
+self.duplicated_with_indices, self.duplicates_count = find_duplicates(read_lines)
+if self.duplicates_count > 0:
+    print('Finding the duplicates.')
+    logging.warning(f'There are {self.duplicates_count} duplicates in the titles. '
+                    f'All duplicates will be replaced by None.')
+
+    for each_list_of_indices in self.duplicated_with_indices.values():
+        for each_index in each_list_of_indices[1:]:
+            read_lines[each_index] = None
+```  
 
 ### References
 
