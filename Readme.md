@@ -110,10 +110,10 @@ In this section, we will try to go through the details of all the necessary step
 
 As you know, when dealing with text data, there are several stages, but everything starts with cleaning. Depending on the context, cleaning can significantly vary. In our case, it consists of removing the signs, removing the numbers, removing the stopwords, and stemming each word. I tried to leave the stopwords removal and stemming optional since we do not need to do these operations in every application. Especially that we will have additional frequent words which do not necessarily help us cluster the titles. 
 
-To facilitate the potential usage of the project in the future, we tried to build the ClusterTitles class with two major methods inside the [cluster.py](/cluster.py) module. The first method which performs the cleaning and preprocessing is called  ```process_clean_the_text()```, and the second one is ```cluster_the_titles()``` method, and its function is to apply ```process_clean_the_text()``` method on the loaded data, transform the cleaned data to vectors, and cluster the titles. <a href='#figure-1'>Figure 1</a> lays out the structure of the project and the interrelations of modules, classes, methods and functions.   
+To facilitate the potential usage of the project in the future, we tried to build the ClusterTitles class with two major methods inside the [cluster.py](/cluster.py) module. The first method which performs the cleaning and preprocessing is called  ```process_clean_the_text()```, and the second one is ```cluster_the_titles()``` method, and its function is to apply ```process_clean_the_text()``` method on the loaded data, transform the cleaned data to vectors, and cluster the titles. <a href="#figure1">Figure 1</a> lays out the structure of the project and the interrelations of modules, classes, methods and functions.   
 
 <img src="/programming_structure.png" title="Figure 1">
-<p align="center"><a name='figure 1'>Figure 1. The programming structure of the project</a></p>
+<p align="center"><a name='figure1'>Figure 1. The programming structure of the project</a></p>
 
 I will try to break ```process_clean_the_text()``` methid into its building blocks and take a deeper look at each one.
 
