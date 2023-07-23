@@ -12,7 +12,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import normalize
 
 MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
-MAIN_DIRECTORY = "E:/Data_Playground/Analytics/"
 DATA_FILE_NAME = "health_care_titles.txt"
 ADDITIONAL_FREQUENT_WORDS_FILE_NAME = 'additional_frequent_words.json'
 FREQUENT_WORDS_CATEGORIES = ['health', 'general', 'analytics', 'information technology']
@@ -23,6 +22,7 @@ HUGGINGFACE_EMBEDDINGS_OUTPUT_NAME = 'last_hidden_state'
 SENTENCE_TRANSFORMERS_MODELS_FOLDER_HUGGINGFACE = 'sentence-transformers/'
 CLEANED_TITLES_NAME = 'cleaned_titles'
 ORIGINAL_TITLES_NAME = 'original_titles'
+BASIC_TRANSFORM_NAME = 'basic'
 
 
 def get_extra_frequent_words_path() -> str:
@@ -180,7 +180,7 @@ def transform_word_to_vec(sequence_of_sentences: Union[Sequence[str], map], toke
     if any(map(lambda each_sentence: each_sentence is None, sequence_of_sentences)):
         raise Exception('The sequence_of_sentences argument must contain valid sentences not Nones')
 
-    if method == 'basic':
+    if method == BASIC_TRANSFORM_NAME:
         word_vectorizer = CountVectorizer(token_pattern=tokenizer_pattern)
         transformed_vectors = word_vectorizer.fit_transform(sequence_of_sentences)
         if normalize_output:
@@ -188,7 +188,7 @@ def transform_word_to_vec(sequence_of_sentences: Union[Sequence[str], map], toke
         else:
             return transformed_vectors.toarray().tolist()
 
-    elif method == 'embedding_all_mpnet':
+    elif method == PRETRAINED_EMBEDDING_MODEL_NAME:
         transformed_vectors = huggingface_sentence_transform(sequence_of_sentences, normalize_output)
         return transformed_vectors.tolist()
     else:

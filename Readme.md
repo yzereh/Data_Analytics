@@ -396,6 +396,8 @@ print('##### Done with cleaning and preprocessing #####')
 return {support.CLEANED_TITLES_NAME: read_lines, support.ORIGINAL_TITLES_NAME: self.read_lines_original}
 ```    
 
+Now, we are ready to move to the next major method ```cluster_the_titles()``` in the ```ClusterTitles```
+
 ### References
 
 [1] A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, Bag of Tricks for Efficient Text Classification

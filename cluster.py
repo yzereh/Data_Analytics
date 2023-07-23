@@ -13,8 +13,16 @@ import time
 
 class ClusterTitles:
 
-    def __init__(self, number_of_clusters: int = 50, minimum_cluster_size: int = 2,
-                 first_two_common_word_proportions: Sequence[float] = None):
+    def __init__(self, remove_stop_words: bool = True, remove_stop_word_signs: bool = True,
+                 add_extra_frequent_words: bool = True, extra_frequent_words_categories: str or Sequence[str] = 'all',
+                 stem_the_words: bool = True, drop_non_english=True, number_of_clusters: int = 50,
+                 minimum_cluster_size: int = 2, first_two_common_word_proportions: Sequence[float] = None):
+        self.drop_non_english = drop_non_english
+        self.stem_the_words = stem_the_words
+        self.extra_frequent_words_categories = extra_frequent_words_categories
+        self.add_extra_frequent_words = add_extra_frequent_words
+        self.remove_stop_word_signs = remove_stop_word_signs
+        self.remove_stop_words = remove_stop_words
         self.transformed_titles = None
         self.original_titles_by_cluster = None
         self.dictionary_of_processed_titles = None
@@ -44,10 +52,7 @@ class ClusterTitles:
         self.read_lines_original: Sequence[str]
         self.keep_or_remove_cluster: List[str] = []
 
-    def process_clean_the_text(self, remove_stop_words: bool = True,
-                               remove_stop_word_signs: bool = True, add_extra_frequent_words: bool = True,
-                               extra_frequent_words_categories: str or Sequence[str] = 'all',
-                               stem_the_words: bool = True, drop_non_english=True) -> Dict:
+    def process_clean_the_text(self) -> Dict:
         """
         Parameters:
                     remove_stop_word_signs: whether the signs must be removed from the stopwords or not (True/False).
@@ -70,7 +75,7 @@ class ClusterTitles:
         read_lines = list(map(lambda each_line: each_line.strip(), read_lines))
         print('Data loaded!')
 
-        if drop_non_english:
+        if self.drop_non_english:
             print('Dropping non english titles.')
             read_lines = is_the_language_english(read_lines)
             print('Done!')
@@ -91,7 +96,7 @@ class ClusterTitles:
         self.cleaned_titles = read_lines.copy()
         print('Done with cleaning.')
 
-        if stem_the_words:
+        if self.stem_the_words:
             print('Stemming the words.')
             stemmer = SnowballStemmer("english")
             read_lines = \
@@ -101,10 +106,10 @@ class ClusterTitles:
             print('Done with stemming.')
 
         self.stemmed_and_cleaned_titles = read_lines
-        if remove_stop_words:
+        if self.remove_stop_words:
             print('Removing stopwords.')
-            stop_words = get_stop_words(add_extra_frequent_words, remove_stop_word_signs,
-                                        extra_frequent_words_categories, stem_the_words)
+            stop_words = get_stop_words(self.add_extra_frequent_words, self.remove_stop_word_signs,
+                                        self.extra_frequent_words_categories, self.stem_the_words)
             read_lines = list(map(
                 lambda each_line: " ".join(each_word for each_word in each_line.split()
                                            if each_word
@@ -139,17 +144,10 @@ class ClusterTitles:
         print('##### Done with cleaning and preprocessing #####')
         return {support.CLEANED_TITLES_NAME: read_lines, support.ORIGINAL_TITLES_NAME: self.read_lines_original}
 
-    def cluster_the_titles(self, remove_stop_words: bool = True,
-                           remove_stop_word_signs: bool = True, add_extra_frequent_words: bool = True,
-                           extra_frequent_words_categories: Union[str, Sequence[str]] = 'all',
-                           stem_the_words: bool = True, drop_non_english=True,
-                           tokenizer_pattern: str = support.TOKEN_PATTERN, transform_method: str = 'basic',
+    def cluster_the_titles(self, tokenizer_pattern: str = support.TOKEN_PATTERN, transform_method: str = 'basic',
                            normalize_output: bool = True):
         global end
-        self.dictionary_of_processed_titles = self.process_clean_the_text(remove_stop_words, remove_stop_word_signs,
-                                                                          add_extra_frequent_words,
-                                                                          extra_frequent_words_categories,
-                                                                          stem_the_words, drop_non_english)
+        self.dictionary_of_processed_titles = self.process_clean_the_text()
 
         cleaned_data, original_data = self.dictionary_of_processed_titles[support.CLEANED_TITLES_NAME],\
             self.dictionary_of_processed_titles[support.ORIGINAL_TITLES_NAME]
