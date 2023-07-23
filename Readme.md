@@ -115,7 +115,7 @@ To facilitate the potential usage of the project in the future, we tried to buil
 <img src="/programming_structure.png" name="figure1" title="Figure 1">
 <p align="center"><a>Figure 1. The programming structure of the project</a></p>
 
-I will try to break ```process_clean_the_text()``` methid into its building blocks and take a deeper look at each one.
+I will try to break down ```process_clean_the_text()``` method into its building blocks and take a deeper look at each one.
 
 - **Load the data into memory**
 
@@ -208,7 +208,7 @@ read_lines = list(map(lambda each_line: " ".join(re.findall("[A-Za-z]+", each_li
     > This is another optional step which I found useful in this application. As you know, it is a very standard operation used in mant text analytics applications. An example would clarify the situation to a large extent. Consider the words prediction, predictive, predict, predicting and predictory. Does it make sense to assume that each of these words can be the subject of a new cluster? In some cases, the answer is yes. But in this case, we tend to cluster the papers based on more generic topics. For instance, one cluster might be text mining and the other can be disease treatments, etc. So in our application, it might make better sense to stem all these words and replace them by $\color{rgb(216,118,0)}\large\textbf{predict}$. There are several stemming algorithms, but I chose to use the [Snowball Stemmer](https://snowballstem.org/). 
 
 ```sh
-if stem_the_words:
+if self.stem_the_words:
     print('Stemming the words.')
     stemmer = SnowballStemmer("english")
     read_lines = \
@@ -234,9 +234,9 @@ if stem_the_words:
  > **Suggestion**: to keep track of all the methods, functions and their relations, take a look at <a href="#figure1">Figure 1</a> every once and a while. 
    
 ```sh
-if remove_stop_words:
-    stop_words = get_stop_words(add_extra_frequent_words, remove_stop_word_signs,
-                                extra_frequent_words_categories, stem_the_words)
+if self.remove_stop_words:
+    stop_words = get_stop_words(self.add_extra_frequent_words, self.remove_stop_word_signs,
+                                self.extra_frequent_words_categories, self.stem_the_words)
     read_lines = list(map(
         lambda each_line: " ".join(each_word for each_word in each_line.split()
                                    if each_word
