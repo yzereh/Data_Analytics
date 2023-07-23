@@ -224,12 +224,14 @@ if stem_the_words:
     
 	> If we leave these words, they will probably dominate the topics of some clusters. But, does it make sense to have a cluster with the topic "machine learning" and another with the topic "patients"? Most likely, I would say no, because these are the most general and the initial search topics. Recall that our initial search was "Machine Learning in Healthcare". As a result, I would say that we can usually find these words depending on the application and get rid of them. I built a JSON document [additional_frequent_words.json](/additional_frequent_words.json) where you can take a look at the frequent words that I found. Offcourse, you can add or remove some words based on your purpose and the application that you are dealing with. The file contains four categories and their associated frequent words. The categories are: **health**, **analytics**, **general**, and **information technology**. One can choose "all", one or a subset of categories to remove their corresponding words from the text. 
 	
-	> At this point, you might think why do not we use the TF-IDF vectorizer instead of spending some time finding these frequent words brining no insight to our clustering. I agree with you! We can definitely use this vectorizer and skip the process of finding frequent words, but I have two arguments against this method for our application. 
+	> At this point, you might think why we do not use the TF-IDF vectorizer instead of spending some time finding these frequent words brining no insight to our clustering. I agree with you! We can definitely use this vectorizer and skip the process of finding frequent words, but I have two arguments against this method for our application. 
 	
 	> 1. What if we want to use another type of word-to-vec transforms, like Embeddings?
 	> 2. I used TF-IDF, and I found that manually finding and removing frequent words yield better results, for our documents are small, and we are looking for more accurate clusters. 
 	
-	> Note that both these arguments might be completely wrong for another application, and you might find TF-IDF very effective in your work especially if you are working with very large documents.   
+	> Note that both these arguments might be completely wrong for another application, and you might find TF-IDF very effective in your work especially if you are working with very large documents.
+ 
+ > **Suggestion**: to keep track of all the methods, functions and their relations, take a look at <a href="#figure1">Figure 1</a> every once and a while. 
    
 ```sh
 if remove_stop_words:
