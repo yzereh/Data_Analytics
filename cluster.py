@@ -13,6 +13,17 @@ import time
 
 class ClusterTitles:
 
+    """
+    Parameters:
+                    remove_stop_word_signs: whether the signs must be removed from the stopwords or not (True/False).
+                    add_extra_frequent_words: whether extra frequently used words must be added to the stopwords
+                    (True/False).
+                    extra_frequent_words_categories: a single category or a collection of categories to select the
+                    most frequently used words from. Default value is 'all' meaning all categories.
+                    remove_stop_words: whether stopwords must be removed or not.
+                    stem_the_words: whether stemming must be done.
+                    drop_non_english: drop if a title is not english.
+    """
     def __init__(self, remove_stop_words: bool = True, remove_stop_word_signs: bool = True,
                  add_extra_frequent_words: bool = True, extra_frequent_words_categories: str or Sequence[str] = 'all',
                  stem_the_words: bool = True, drop_non_english=True, number_of_clusters: int = 50,
@@ -54,15 +65,6 @@ class ClusterTitles:
 
     def process_clean_the_text(self) -> Dict:
         """
-        Parameters:
-                    remove_stop_word_signs: whether the signs must be removed from the stopwords or not (True/False).
-                    add_extra_frequent_words: whether extra frequently used words must be added to the stopwords
-                    (True/False).
-                    extra_frequent_words_categories: a single category or a collection of categories to select the
-                    most frequently used words from. Default value is 'all' meaning all categories.
-                    remove_stop_words: whether stopwords must be removed or not.
-                    stem_the_words: whether stemming must be done.
-                    drop_non_english: drop if a title is not english.
         return: a dictionary with two keys, 1. cleand_title: the cleaned data, and
         2. original_titles: the initial untouched data
         """
