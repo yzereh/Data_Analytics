@@ -146,7 +146,8 @@ class ClusterTitles:
         print('##### Done with cleaning and preprocessing #####')
         return {support.CLEANED_TITLES_NAME: read_lines, support.ORIGINAL_TITLES_NAME: self.read_lines_original}
 
-    def cluster_the_titles(self, tokenizer_pattern: str = support.TOKEN_PATTERN, transform_method: str = 'basic',
+    def cluster_the_titles(self, tokenizer_pattern: str = support.TOKEN_PATTERN,
+                           transform_method: str = support.BASIC_TRANSFORM_NAME,
                            normalize_output: bool = True):
         global end
         self.dictionary_of_processed_titles = self.process_clean_the_text()

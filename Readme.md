@@ -396,12 +396,70 @@ print('##### Done with cleaning and preprocessing #####')
 return {support.CLEANED_TITLES_NAME: read_lines, support.ORIGINAL_TITLES_NAME: self.read_lines_original}
 ```    
 
-Now, we are ready to move to the next major method ```cluster_the_titles()``` in the ```ClusterTitles```
+Now, we are ready to move to the next major method in the ```ClusterTitles``` class, the ```cluster_the_titles()``` method. Similar to the previous method, we need to look at each important step within this method to have a better grasp of it. 
 
+- **Get the Original and Cleaned Titles**
+
+>> First, we get the cleaned and the initial, untoached titles from the ```process_clean_the_text()``` method. 
+
+```sh
+self.dictionary_of_processed_titles = self.process_clean_the_text()
+cleaned_data, original_data = self.dictionary_of_processed_titles[support.CLEANED_TITLES_NAME], self.dictionary_of_processed_titles[support.ORIGINAL_TITLES_NAME]
+```
+
+>> Next, we find the location of ```Nones``` and remove them from both the original and cleaned titles. To find the location of ```Nones```, we use the ```find_none_indices()``` function:
+
+```sh
+def find_none_indices(sequence_of_values: Sequence):
+    if not sequence_of_values:
+        raise Exception('Please provide a valid sequence')
+    index = -1
+    none_indices = []
+    for each_element in sequence_of_values:
+        index += 1
+        if each_element is None:
+            none_indices.append(index)
+    return none_indices
+```
+
+>> This function simply gets a sequence of values and returns the list of indexes showing the locations of ```Nones``` in the input sequence.
+
+```sh
+self.indices_of_nones = find_none_indices(cleaned_data)
+self.original_data_without_nones = [original_data[none_index] for none_index in range(len(original_data))
+                                            if none_index not in self.indices_of_nones]
+self.cleaned_data_without_nones = [each_element for each_element in cleaned_data if each_element is not None]
+```
+
+>> The subsequent step would be to transform the words or the sentences to numeric vectors. The word_to_vec transformations are abundant and the literature is very rich. Even the sentence transformations which transform a sentence to a vector directly are numerous now. It is a nice opportunity to have a brief introduction to some of the transformations which I have personally taken the most advantage of:
+
+>> **Note**: this section can be skipped if you are not interested in the details of word to vectors transformations. 
+
+>>> - the simple **count vectorizer** which counts the frequency of each word in every title and builds a matrix with each row representing each title and every word giving a column. The matrix would be sparse since the titles are short in our case, and chances are high that the words do not appear in many titles. You can find the Python documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html).
+
+>>> - TF-IDF vecorizer which is similar to CountVectorizer, but it also downplays the importance of the words that are very frequent, and it tries to capture the jargon in a corpus. See Python [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer) for further information.  
+
+>>> - Pre-trained GLoVe is a vector representation method which transforms words to 25d, 50d, 100d, 200d and 300d vectors (d stands for dimensional). 
+
+
+
+
+ 
+
+ > - $\color{rgb(216,118,0)}\large\textrm{params}$:
+ >  >  >  **tokenizer_pattern**: in case we want to tokenize the text, what pattern we need to use. The default is ```support.TOKEN_PATTERN = r"\b[^\d\W]+\b"```.
+ >  >  >  **transform_method**: which method we want to use to transform the words (sentences) to vectors. I tried several embedding and classical methods and decided to stick to these two methods:
+ 
+ >  >  > 1. the basic CountVectorizer() method w
+ 
+ >  >  > 2. 
+   
 ### References
 
 [1] A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, Bag of Tricks for Efficient Text Classification
 
 [2] A. Joulin, E. Grave, P. Bojanowski, M. Douze, H. Jégou, T. Mikolov, FastText.zip: Compressing text classification models
+
+[3] J. Pennington, R. Socher, and C. D. Manning. 2014. GloVe: Global Vectors for Word Representation. ]
 
 
