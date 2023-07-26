@@ -430,17 +430,21 @@ self.original_data_without_nones = [original_data[none_index] for none_index in 
                                             if none_index not in self.indices_of_nones]
 self.cleaned_data_without_nones = [each_element for each_element in cleaned_data if each_element is not None]
 ```
-- **Word/Sentence to Vector Transformation**
+- **Word/Sentence-to-Vector Transformation**
 
 >> The subsequent step would be to transform the words or the sentences to numeric vectors. The word_to_vec transformations are abundant and the literature is very rich. Even the sentence transformations which transform a sentence to a vector directly are numerous now. It is a nice opportunity to have a brief introduction to some of the transformations which I have personally taken the most advantage of:
 
 >> **Note**: this section can be skipped if you are not interested in the details of word to vectors transformations. 
 
->>> - the simple **count vectorizer** which counts the frequency of each word in every title and builds a matrix with each row representing each title and every word giving a column. The matrix would be sparse since the titles are short in our case, and chances are high that the words do not appear in many titles. You can find the Python documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html).
+>>> - the simple **count vectorizer** which counts the frequency of each word in every title and builds a matrix with each row representing a title and every word giving a column. The term-document matrix would be sparse since the titles are short in our case, and chances are high that the words do not appear in many titles. You can find the Python documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html).
 
->>> - TF-IDF vecorizer which is similar to CountVectorizer, but it also downplays the importance of the words that are very frequent, and it tries to capture the jargon in a corpus. See Python [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer) for further information.  
+>>> - TF-IDF vecorizer which is similar to CountVectorizer, but it also downplays the importance of the words that are very frequent, and it tries to capture the the technical jargon of a sprcific context in a corpus. See Python [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer) for further information.  
 
->>> - Pre-trained GLoVe is a vector representation method which transforms words to 25d, 50d, 100d, 200d and 300d vectors (d stands for dimensional). 
+>>> - Pre-trained GLoVe [3](#j.-pennington) is a vector representation method which transforms each word to a 25d, 50d, 100d, 200d or 300d vector with d standing for dimensional here. The idea behind GloVe is very interesting, and I suggest you to read their [paper](#https://nlp.stanford.edu/pubs/glove.pdf). 
+
+>>>>> First, a word on word co-occurrence matrix is constructed using a large corpus. What is a co-occurrence matrix? It is a matrix whose rows and columns are represented by words. In the literature, the rows are simply called words, and the columns are called contexts, but generally, we can say that words and contexts are interchangeable. For instance, if "surgery" is a word and "health" is the context, then we can switch the roles and assume that "surgery" is the context and "health" is the word.
+
+>>>>> What are the entries of this matrix? the entries are usually the number of times a word appears in a context. So in our example, we are looking for the number of times the word "surgery" appears in the "health" context. Now that we know what a co-occurrence matrix is, we can go through more the details of the GLoVe method. Based on this matrix, the co-occurrence probability matrix is built. The probabilities are the conditional probability that a word occurs given a specific context. Let's say $probP("surgery"|"health")$
 
 
 
