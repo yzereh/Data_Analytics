@@ -440,11 +440,31 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 >>> - TF-IDF vecorizer which is similar to CountVectorizer, but it also downplays the importance of the words that are very frequent, and it tries to capture the the technical jargon of a sprcific context in a corpus. See Python [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer) for further information.  
 
->>> - Pre-trained GLoVe [3](#j.-pennington) is a vector representation method which transforms each word to a 25d, 50d, 100d, 200d or 300d vector with d standing for dimensional here. The idea behind GloVe is very interesting, and I suggest you to read their [paper](#https://nlp.stanford.edu/pubs/glove.pdf). 
+>>> - Pre-trained GLoVe [3](#references) is a vector representation method which transforms each word to a 25d, 50d, 100d, 200d or 300d vector with d standing for dimensional here. The idea behind GloVe is very interesting, and I suggest you to read their [paper](#https://nlp.stanford.edu/pubs/glove.pdf). 
 
 >>>>> First, a word on word co-occurrence matrix is constructed using a large corpus. What is a co-occurrence matrix? It is a matrix whose rows and columns are represented by words. In the literature, the rows are simply called words, and the columns are called contexts, but generally, we can say that words and contexts are interchangeable. For instance, if "surgery" is a word and "health" is the context, then we can switch the roles and assume that "surgery" is the context and "health" is the word.
 
->>>>> What are the entries of this matrix? the entries are usually the number of times a word appears in a context. So in our example, we are looking for the number of times the word "surgery" appears in the "health" context. Now that we know what a co-occurrence matrix is, we can go through more the details of the GLoVe method. Based on this matrix, the co-occurrence probability matrix is built. The probabilities are the conditional probability that a word occurs given a specific context. Let's say $probP("surgery"|"health")$
+>>>>> What are the entries of this matrix? the entries are usually the number of times a word appears in a context. So in our example, we are looking for the number of times the word "surgery" appears in the "health" context. Now that we know what a co-occurrence matrix is, we can go through more the details of the GLoVe method. Based on this matrix, the co-occurrence probability matrix is built. The probabilities are the conditional probability that a word occurs given a specific context. Let's say $\mathbb p(surgery|health)$ gives the probability that "surgery" occurs in the "health" context. Further assume that $\mathbb p(surgery|politics)$ is the probability that the word "surgery" appears in the "politics" context. Which one is supposed to be bigger? Since we are talking about "surgery", it is more likely to observe it in the "health" context rathar than the "politics" context. In other words, the $\frac{\mathbb p(surgery|health)}{\mathbb p(surgery|politics)}$ ratio must be a large number, and a ratio, such as $\frac{\mathbb p(filibuster|health)}{\mathbb p(filibuster|politics)}$ must be a small one since it is more probable to see "filibuster" in the "politics" context.
+
+>>>>> Consequently, it makes a perfect sense to look at this ratio a distinctive feature that can tell us about the semantic similarity of two words. Now, how can we relate this to some vectors? Here is the beauty of what Pennington et al. (2014) are suggesting. I will try to briefly talk about the main idea. We need to find some $d$ dimensional vectors representing the words and contexts by incorporating the aforementioned probability ratios which can be also presented in a more generic format as $\frac{\mathbb p(Word_i|Context_k)}{\mathbb p(Word_j|Context_k)}$.
+
+>>>>> Let's assume that the $w_i$, $w_j$ and $w_k$ give the $d$ dimensional vectors representing $Word_i$, $Word_j$ and $Context_k$, respectively. Our purpose would be to estimate $w_i$, $w_j$ and $w_k$ considering the aforementioned probability ratio. To this end, in the paper, they suggest Eq.(1) relating the global vectors to the probability ratios:
+
+<p align="center">$\mathbb F(w_i, w_j, w_k) = \frac{\mathbb p(Word_i|Context_k)}{\mathbb p(Word_j|Context_k)}$ $\mathbb (1)$</p>
+
+>>>>> They; afterwards, make some assumptions about the function $\mathbb F$ to simplify the estimation. After appying all these assumptions, the relationship in Eq. (1) simplifies to:
+
+<p align="center">$\mathbb w_i^Tw_k + b_i + b_k = log(x_ik)$ $\mathbb (2)$</p>
+
+>>>>> where, $b_i$ and $b_k$ are some bias terms to be estimated, and they appear here to restore the symmetry of the co-oocurence matrix (the interchangeability of words and contexts), and $x_ik$ is the number of times the word $i$ appears in context $k$. Finally, the problem can be formulated as a weighted least squares problem with an objectibe function defined as:
+
+<p align="center">$\mathbb \sum_{i,j=1}^{V} \omega(ij)(log(x_ij) - w_i^Tw_j - b_i - b_j)^2$ $\mathbb (3)$</p>
+
+>>>>> where, V is the number of words in the corpus, and $\omega(ij)$ is a weight function assigned to every word-context pair to avoid the dominance of very frequent and infrequent words.
+
+>>>>> The final solution is obtained by minimizing the objective function in Eq. (3). 
+
+>>> - Fasttext Token Transformation
 
 
 
