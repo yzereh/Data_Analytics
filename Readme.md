@@ -430,7 +430,7 @@ self.original_data_without_nones = [original_data[none_index] for none_index in 
                                             if none_index not in self.indices_of_nones]
 self.cleaned_data_without_nones = [each_element for each_element in cleaned_data if each_element is not None]
 ```
-- **Word/Sentence-to-Vector Transformation**
+- **Word/Sentence-to-Vector Transformation and Embeddings**
 
 >> The subsequent step would be to transform the words or the sentences to numeric vectors. The word_to_vec transformations are abundant and the literature is very rich. Even the sentence transformations which transform a sentence to a vector directly are numerous now. It is a nice opportunity to have a brief introduction to some of the transformations which I have personally taken the most advantage of:
 
@@ -440,7 +440,7 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 >>> - TF-IDF vecorizer which is similar to CountVectorizer, but it also downplays the importance of the words that are very frequent, and it tries to capture the the technical jargon of a sprcific context in a corpus. See Python [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer) for further information.  
 
->>> - Pre-trained GLoVe [3](#references) is a vector representation method which transforms each word to a 25d, 50d, 100d, 200d or 300d vector with d standing for dimensional here. The idea behind GloVe is very interesting, and I suggest you to read their [paper](#https://nlp.stanford.edu/pubs/glove.pdf). 
+>>> - Pre-trained GLoVe [\[3\]](#references) is a vector representation method which transforms each word to a 25d, 50d, 100d, 200d or 300d vector with d standing for dimensional here. The idea behind GloVe is very interesting, and I suggest you to read their [paper](#https://nlp.stanford.edu/pubs/glove.pdf). 
 
 >>>>> First, a word on word co-occurrence matrix is constructed using a large corpus. What is a co-occurrence matrix? It is a matrix whose rows and columns are represented by words. In the literature, the rows are simply called words, and the columns are called contexts, but generally, we can say that words and contexts are interchangeable. For instance, if "surgery" is a word and "health" is the context, then we can switch the roles and assume that "surgery" is the context and "health" is the word.
 
@@ -464,11 +464,18 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 >>>>> The final solution is obtained by minimizing the objective function in Eq. (3). 
 
->>> - Fasttext Token Transformation
+>>> - Pre-trained Fastext model has some major differences with the pervious word representations enumerated below:
+>>>>> - Instead of finding merely the word representations, it finds the chraracter n-gram representations. What does this mean? Let's take a look at a simple example. Consider the word "healthcare". The list of trigrams can be given as:
 
+<p align="center">$(hea, eal, alt, lth, thc, hca, car, are)$</p>
 
+>>>>>>> plust the n-gram of the word itself
 
+<p align="center">$(healthcare)$</p>
 
+>>>>>>> so, instead of having a $d$ dimensional vector $w_i$ for $Word_i$, we will have a set of $d$ dimensional vectors $\nu_j; j = 1, 2, ..., N$, where $N$ is the number of character n-grams including the word itself. Then, the final word representation would be given as:
+
+<p align="center">$\nu_w + \frac{\sum{j=1, j \neq w}^{N}\nu_j}{N}$</p>
  
 
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
