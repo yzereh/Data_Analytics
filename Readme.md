@@ -464,7 +464,7 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 >>>>> The final solution is obtained by minimizing the objective function in Eq. (3). 
 
->>> - Pre-trained Fastext model developed by Mikolov has some major differences with  et al. (2017) [\[4\]](#references) the pervious word representations enumerated below:
+>>> - Pre-trained Fastext model developed by Mikolov et al. (2017) [\[4\]](#references)  has some major differences with the pervious word representations enumerated below:
 >>>>> - Instead of finding merely the word representations, it finds the chraracter n-gram representations. What does this mean? Let's take a look at a simple example. Consider the word "healthcare". The list of trigrams can be given as:
 
 <p align="center">$(hea, eal, alt, lth, thc, hca, car, are)$</p>
@@ -479,7 +479,8 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
  
 >>>>>>> What is the advantage of this? it has two advantages. First, we can find the words representations for out-of the vocabulary words. Second, the words that are infrequent, will not be underrepresented.
 
->>>>> - The position of the words is considered and incorporated as some vectors weighting the word representations. I will not go through the details, but you can find the original paper [here](#https://proceedings.neurips.cc/paper/2013/file/db2b4182156b2f1f817860ac9f409ad7-Paper.pdf). 
+>>>>> - The position of the words is considered and incorporated as some vectors weighting the word representations. I will not go through the details, but you can find the original paper [here](#https://proceedings.neurips.cc/paper/2013/file/db2b4182156b2f1f817860ac9f409ad7-Paper.pdf).
+>>>>> - In this model, a simple approach is used to see wether it is worth it to combine some wods together to create phrases. The phrsees, then, are used as a unigram and a word representation vector is obtained. For instance, the bigram "machine learning" is probably more likely to occure compared to the unigrams "machine" and "learning". In this case, these two unigrams would be combined to create a new unigram called "machine_learning" and a word representation is btained for the whole combined unigram. Doing so, will provide a model with richer information and closer to reality. You can find more details in this [paper](#https://arxiv.org/pdf/1310.4546.pdf) by Mikolov et al. (2013) [\[4\]](#references).
 
 
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
@@ -496,6 +497,17 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 [2] A. Joulin, E. Grave, P. Bojanowski, M. Douze, H. Jégou, T. Mikolov, FastText.zip: Compressing text classification models
 
-[3] J. Pennington, R. Socher, and C. D. Manning. 2014. GloVe: Global Vectors for Word Representation. ]
+[3] J. Pennington, R. Socher, and C. D. Manning. 2014. GloVe: Global Vectors for Word Representation. 
+
+[4] Bojanowski, P., Grave, E., Joulin, A., and Mikolov, T. (2017). Enriching word vectors with subword information. Transactions of the Association for Computational Linguistics, 5:135–146.
+
+[5] Mikolov, T., Sutskever, I., Chen, K., Corrado, G. S., and Dean, J. (2013b). Distributed representations of words and phrases and their compositionality. In Advances in neural information processing systems, pages 3111–3119.
+
+$@inproceedings{grave2018learning,
+  title={Learning Word Vectors for 157 Languages},
+  author={Grave, Edouard and Bojanowski, Piotr and Gupta, Prakhar and Joulin, Armand and Mikolov, Tomas},
+  booktitle={Proceedings of the International Conference on Language Resources and Evaluation (LREC 2018)},
+  year={2018}
+}$
 
 
