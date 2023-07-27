@@ -464,12 +464,12 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 >>>>> The final solution is obtained by minimizing the objective function in Eq. (3). 
 
->>> - Pre-trained Fastext model has some major differences with the pervious word representations enumerated below:
+>>> - Pre-trained Fastext model developed by Mikolov has some major differences with  et al. (2017) [\[4\]](#references) the pervious word representations enumerated below:
 >>>>> - Instead of finding merely the word representations, it finds the chraracter n-gram representations. What does this mean? Let's take a look at a simple example. Consider the word "healthcare". The list of trigrams can be given as:
 
 <p align="center">$(hea, eal, alt, lth, thc, hca, car, are)$</p>
 
->>>>>>> plust the n-gram of the word itself
+>>>>>>> plus the n-gram of the word itself
 
 <p align="center">$(healthcare)$</p>
 
@@ -477,7 +477,10 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 <p align="center">$\nu_w + \frac{\sum{j=1, j \neq w}^{N}\nu_j}{N}$</p>
  
+>>>>>>> What is the advantage of this? it has two advantages. First, we can find the words representations for out-of the vocabulary words. Second, the words that are infrequent, will not be underrepresented.
 
+>>>>> - The position of the words is considered and incorporated as some vectors weighting the word representations. I will not go through the details, but you can find the original paper [here](#https://proceedings.neurips.cc/paper/2013/file/db2b4182156b2f1f817860ac9f409ad7-Paper.pdf). 
+>>>>
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
  >  >  >  **tokenizer_pattern**: in case we want to tokenize the text, what pattern we need to use. The default is ```support.TOKEN_PATTERN = r"\b[^\d\W]+\b"```.
  >  >  >  **transform_method**: which method we want to use to transform the words (sentences) to vectors. I tried several embedding and classical methods and decided to stick to these two methods:
