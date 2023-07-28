@@ -44,3 +44,15 @@ This document briefly discusses some of the frequently used word to vector trans
 
 >>> - The position of the words is considered and incorporated as some vectors weighting the word representations. I will not go through the details, but you can find the original paper [here](#https://proceedings.neurips.cc/paper/2013/file/db2b4182156b2f1f817860ac9f409ad7-Paper.pdf) [\[4\]](#references).
 >>> - In this model, a simple approach is used to see wether it is worth it to combine some wods together to create phrases. The phrsees, then, are used as a unigram and a word representation vector is obtained. For instance, the bigram "machine learning" is probably more likely to occure compared to the unigrams "machine" and "learning". In this case, these two unigrams would be combined to create a new unigram called "machine_learning" and a word representation is btained for the whole combined unigram. Doing so, will provide a model with richer information and closer to reality. You can find more details in this [paper](#https://arxiv.org/pdf/1310.4546.pdf) by Mikolov et al. (2013) [\[5\]](#references).
+
+**References**
+
+[1] J. Pennington, R. Socher, and C. D. Manning. 2014. GloVe: Global Vectors for Word Representation. 
+
+[2] T. Mikolov, E. Grave, P. Bojanowski, C. Puhrsch, A. Joulin. Advances in Pre-Training Distributed Word Representations
+
+[3] Bojanowski, P., Grave, E., Joulin, A., and Mikolov, T. (2017). Enriching word vectors with subword information. Transactions of the Association for Computational Linguistics, 5:135–146.
+
+[4] Mnih, A. and Kavukcuoglu, K. (2013). Learning word embeddings efficiently with noise-contrastive estimation. In Advances in neural information processing systems, pages 2265–2273.
+
+[5] Mikolov, T., Sutskever, I., Chen, K., Corrado, G. S., and Dean, J. (2013b). Distributed representations of words and phrases and their compositionality. In Advances in neural information processing systems, pages 3111–3119.
