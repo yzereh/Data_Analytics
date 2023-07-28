@@ -432,9 +432,7 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 ```
 - **Word/Sentence-to-Vector Transformation and Embeddings**
 
->> The subsequent step would be to transform the words or the sentences to numeric vectors. The word_to_vec transformations are abundant and the literature is very rich. Even the sentence transformations which transform a sentence to a vector directly are numerous now. It is a nice opportunity to have a brief introduction to some of the transformations which I have personally taken the most advantage of:
-
->> **Note**: this section can be skipped if you are not interested in the details of word to vectors transformations. 
+>> The subsequent step would be to transform the words or the sentences to numeric vectors. The word_to_vec transformations are abundant and the literature is very rich. Even the sentence transformations which transform a sentence to a vector directly are numerous now. It is a nice opportunity to have a brief introduction to some of the transformations which I have personally used a lot in different applications. I tried to go through some details which can be skipped if you are not interested. All the details are provided in a separete document called [WordRepresentationMethods](/WordRepresentationMethods.md). Here, I am just going to list the name of these methods. 
 
 >>> - the simple **count vectorizer** which counts the frequency of each word in every title and builds a matrix with each row representing a title and every word giving a column. The term-document matrix would be sparse since the titles are short in our case, and chances are high that the words do not appear in many titles. You can find the Python documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html).
 
