@@ -479,7 +479,7 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
  
 >>>>>>> What is the advantage of this? it has two advantages. First, we can find the words representations for out-of the vocabulary words. Second, the words that are infrequent, will not be underrepresented. For more information you could take a look at the original paper by Bojanowski et al. (2017) [\[5\]](#references).
 
->>>>> - The position of the words is considered and incorporated as some vectors weighting the word representations. I will not go through the details, but you can find the original paper [here](#https://proceedings.neurips.cc/paper/2013/file/db2b4182156b2f1f817860ac9f409ad7-Paper.pdf)[\[6\]](#references).
+>>>>> - The position of the words is considered and incorporated as some vectors weighting the word representations. I will not go through the details, but you can find the original paper [here](#https://proceedings.neurips.cc/paper/2013/file/db2b4182156b2f1f817860ac9f409ad7-Paper.pdf) [\[6\]](#references).
 >>>>> - In this model, a simple approach is used to see wether it is worth it to combine some wods together to create phrases. The phrsees, then, are used as a unigram and a word representation vector is obtained. For instance, the bigram "machine learning" is probably more likely to occure compared to the unigrams "machine" and "learning". In this case, these two unigrams would be combined to create a new unigram called "machine_learning" and a word representation is btained for the whole combined unigram. Doing so, will provide a model with richer information and closer to reality. You can find more details in this [paper](#https://arxiv.org/pdf/1310.4546.pdf) by Mikolov et al. (2013) [\[7\]](#references).
 
 
