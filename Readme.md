@@ -33,12 +33,10 @@ The main concepts of the project can be enumerated as follows:
 - Try to figure out the topic of each group either automatically or by scrutinizing the papers falling inside each cluster
 - Finalize and visualize all clusters so that people can explore, read and familiarize themselves with the topics and their associated papers
 #### Purpose
-There are two main purposes that we are trying to reach by doing this project. Firstly, we are going to go through the details of how we can deal with the challenges faced when working with a real problem. The challenges are both technical and practical, and I will try to introduce the challenge, discuss it and try one or more solutions. We will see how a seemingly simple yet fruitful Machine Learning procedure can be put in practice and used in a production environment which is typically called $\color{rgb(216,118,0)}\large\textrm{productionization}$ or $\color{rgb(216,118,0)}\large\textrm{modularization}$
-
+There are two main purposes that we are trying to reach by doing this project. Firstly, we are going to go through the details of how we can deal with the challenges faced when working with a real problem. The challenges are both technical and practical, and I will try to introduce the challenge, discuss it and try one or more solutions. We will see how a seemingly simple yet fruitful Machine Learning procedure can be put in practice and used in a production environment, which is typically called $\color{rgb(216,118,0)}\large\textrm{productionization}$ or $\color{rgb(216,118,0)}\large\textrm{modularization}$.
 Moreover, the codes, visualization and the logic of the project can be a starting point for many other similar projects in the field; as a result, it might provide some ideas for those interested in a similar domain.  
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 #### Main Collars
 
@@ -47,8 +45,9 @@ To work on this project, we will walk through or scratch the surface of the foll
 1. Regular expressions
 2. Basic NLP techniques: stopwords, stemming, tokenization and ngrams
 3. More advanced NLP techniques: word-to-vec transforms, sentence transforms, topic detection, and topic label generation
-4. K-Means clustering
-5. Plotly visualization and Python dash 
+4. Dimension Reduction (PCA, t-SNE, UMAP)
+5. K-Means and HDBSCAN clustering
+6. Plotly visualization and Python dash 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -441,6 +440,12 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 >>> - Pre-trained GLoVe [\[3\]](#references) is a context-free vector representation method which transforms each word to a 25d, 50d, 100d, 200d or 300d vector with d standing for dimensional here. The idea behind GloVe is very interesting, and I suggest you to read their [paper](#https://nlp.stanford.edu/pubs/glove.pdf). 
 
 >>> - Pre-trained Fasttext model developed by Mikolov et al. (2017) [\[4\]](#references) has some differences with the pervious word representations. The most impotant one is that it can provide word representations for a word which did not exist in the original corpus used to train the model. Please see [WordRepresentationMethods](/WordRepresentationMethods.md) for more details.
+
+>>> - BERT (to be added)
+
+>>> - Sentence BERT (to be added)
+
+>>> - Fine-tuned [microsoft/mpnet-base](#https://www.microsoft.com/en-us/research/blog/mpnet-combines-strengths-of-masked-and-permuted-language-modeling-for-language-understanding/) transformer
 
 
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
