@@ -429,7 +429,7 @@ self.original_data_without_nones = [original_data[none_index] for none_index in 
                                             if none_index not in self.indices_of_nones]
 self.cleaned_data_without_nones = [each_element for each_element in cleaned_data if each_element is not None]
 ```
-- **Word/Sentence-to-Vector Transformation and Embeddings**
+- **Word/Sentence-to-Vector Transformation and Bag of words Representation**
 
 >> The subsequent step would be to transform the words or the sentences to numeric vectors. The word_to_vec transformations are abundant and the literature is very rich. Even the sentence transformations which transform a sentence to a vector directly are numerous now. It is a nice opportunity to have a brief introduction to some of the transformations which I have personally used a lot in different applications. I tried to go through some details which can be skipped if you are not interested. More details are provided in a separete document called [WordRepresentationMethods](/WordRepresentationMethods.md). Here, I am just going to list the name of these methods. 
 
