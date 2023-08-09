@@ -33,12 +33,13 @@ The main concepts of the project can be enumerated as follows:
 - Try to figure out the topic of each group either automatically or by scrutinizing the papers falling inside each cluster
 - Finalize and visualize all clusters so that people can explore, read and familiarize themselves with the topics and their associated papers
 #### Purpose
-There are two main purposes that we are trying to reach by doing this project. Firstly, we are going to go through the details of how we can deal with the challenges faced when working with a real problem. The challenges are both technical and practical, and I will try to introduce the challenge, discuss it and try one or more solutions. We will see how a seemingly simple yet fruitful Machine Learning procedure can be put in practice and used in a production environment which is typically called $\color{rgb(216,118,0)}\large\textrm{productionization}$ or $\color{rgb(216,118,0)}\large\textrm{modularization}$
+There are two main purposes that we are trying to reach by doing this project. Firstly, we are going to go through the details of dealing with the challenges faced when working with a practical problem. The challenges are both technical and practical, and I will try to introduce the challenge, discuss it and try one or more solutions. We will see how a seemingly simple yet fruitful Machine Learning procedure can be put in practice and used in a production environment, which is typically called $\color{rgb(216,118,0)}\large\textrm{productionization}$ or $\color{rgb(216,118,0)}\large\textrm{operationalization}$.
+Moreover, the codes, visualizations and the logic of the project can be a starting point for other similar projects in the field; as a result, it might provide some ideas for those interested in a similar domain. Figure 1 shows the main framework of the project. As it can be seen, in almost every step, there are several options to follow, and I will try to provide some insights on our decision making process which is going to be mainly data driven. 
 
-Moreover, the codes, visualization and the logic of the project can be a starting point for many other similar projects in the field; as a result, it might provide some ideas for those interested in a similar domain.  
+<img src="/general_framework.png" name="figure1" title="Figure 1">
+<p align="center"><a>Figure 1. Framework of the project</a></p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 #### Main Collars
 
@@ -47,8 +48,9 @@ To work on this project, we will walk through or scratch the surface of the foll
 1. Regular expressions
 2. Basic NLP techniques: stopwords, stemming, tokenization and ngrams
 3. More advanced NLP techniques: word-to-vec transforms, sentence transforms, topic detection, and topic label generation
-4. K-Means clustering
-5. Plotly visualization and Python dash 
+4. Dimension Reduction (PCA, t-SNE, UMAP)
+5. K-Means and HDBSCAN clustering
+6. Plotly visualization and Python dash 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -110,10 +112,10 @@ In this section, we will try to go through the details of all the necessary step
 
 As you know, when dealing with text data, there are several stages, but everything starts with cleaning. Depending on the context, cleaning can significantly vary. In our case, it consists of removing the signs, removing the numbers, removing the stopwords, and stemming each word. I tried to leave the stopwords removal and stemming optional since we do not need to do these operations in every application. Especially that we will have additional frequent words which do not necessarily help us cluster the titles. 
 
-To facilitate the potential usage of the project in the future, we tried to build the ClusterTitles class with two major methods inside the [cluster.py](/cluster.py) module. The first method which performs the cleaning and preprocessing is called  ```process_clean_the_text()```, and the second one is ```cluster_the_titles()``` method, and its function is to apply ```process_clean_the_text()``` method on the loaded data, transform the cleaned data to vectors, and cluster the titles. <a href="#figure1">Figure 1</a> lays out the structure of the project and the interrelations of modules, classes, methods and functions.   
+To facilitate the potential usage of the project in the future, we tried to build the ClusterTitles class with two major methods inside the [cluster.py](/cluster.py) module. The first method which performs the cleaning and preprocessing is called  ```process_clean_the_text()```, and the second one is ```cluster_the_titles()``` method, and its function is to apply ```process_clean_the_text()``` method on the loaded data, transform the cleaned data to vectors, and cluster the titles. <a href="#figure1">Figure 2</a> lays out the structure of the project and the interrelations of modules, classes, methods and functions.   
 
-<img src="/programming_structure.png" name="figure1" title="Figure 1">
-<p align="center"><a>Figure 1. The programming structure of the project</a></p>
+<img src="/programming_structure.png" name="figure2" title="Figure 2">
+<p align="center"><a>Figure 2. The programming structure of the project</a></p>
 
 I will try to break down ```process_clean_the_text()``` method into its building blocks and take a deeper look at each one.
 
@@ -231,7 +233,7 @@ if self.stem_the_words:
 	
 	> Note that both these arguments might be completely wrong for another application, and you might find TF-IDF very effective in your work especially if you are working with very large documents.
  
- > **Suggestion**: to keep track of all the methods, functions and their relations, take a look at <a href="#figure1">Figure 1</a> every once and a while. 
+ > **Suggestion**: to keep track of all the methods, functions and their relations, take a look at <a href="#figure1">Figure 2</a> every once and a while. 
    
 ```sh
 if self.remove_stop_words:
@@ -430,46 +432,24 @@ self.original_data_without_nones = [original_data[none_index] for none_index in 
                                             if none_index not in self.indices_of_nones]
 self.cleaned_data_without_nones = [each_element for each_element in cleaned_data if each_element is not None]
 ```
-- **Word/Sentence-to-Vector Transformation**
+- **Word/Sentence-to-Vector Transformation and Bag of words Representation**
 
->> The subsequent step would be to transform the words or the sentences to numeric vectors. The word_to_vec transformations are abundant and the literature is very rich. Even the sentence transformations which transform a sentence to a vector directly are numerous now. It is a nice opportunity to have a brief introduction to some of the transformations which I have personally taken the most advantage of:
-
->> **Note**: this section can be skipped if you are not interested in the details of word to vectors transformations. 
+>> The subsequent step would be to transform the words or the sentences to numeric vectors. The word_to_vec transformations are abundant and the literature is very rich. Even the sentence transformations which transform a sentence to a vector directly are numerous now. It is a nice opportunity to have a brief introduction to some of the transformations which I have personally used a lot in different applications. I tried to go through some details which can be skipped if you are not interested. More details are provided in a separete document called [WordRepresentationMethods](/WordRepresentationMethods.md). Here, I am just going to list the name of these methods. 
 
 >>> - the simple **count vectorizer** which counts the frequency of each word in every title and builds a matrix with each row representing a title and every word giving a column. The term-document matrix would be sparse since the titles are short in our case, and chances are high that the words do not appear in many titles. You can find the Python documentation [here](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html).
 
 >>> - TF-IDF vecorizer which is similar to CountVectorizer, but it also downplays the importance of the words that are very frequent, and it tries to capture the the technical jargon of a sprcific context in a corpus. See Python [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer) for further information.  
 
->>> - Pre-trained GLoVe [3](#references) is a vector representation method which transforms each word to a 25d, 50d, 100d, 200d or 300d vector with d standing for dimensional here. The idea behind GloVe is very interesting, and I suggest you to read their [paper](#https://nlp.stanford.edu/pubs/glove.pdf). 
+>>> - Pre-trained GLoVe [\[3\]](#references) is a context-free vector representation method which transforms each word to a 25d, 50d, 100d, 200d or 300d vector with d standing for dimensional here. The idea behind GloVe is very interesting, and I suggest you to read their [paper](#https://nlp.stanford.edu/pubs/glove.pdf). 
 
->>>>> First, a word on word co-occurrence matrix is constructed using a large corpus. What is a co-occurrence matrix? It is a matrix whose rows and columns are represented by words. In the literature, the rows are simply called words, and the columns are called contexts, but generally, we can say that words and contexts are interchangeable. For instance, if "surgery" is a word and "health" is the context, then we can switch the roles and assume that "surgery" is the context and "health" is the word.
+>>> - Pre-trained Fasttext model developed by Mikolov et al. (2017) [\[4\]](#references) has some differences with the pervious word representations. The most impotant one is that it can provide word representations for a word which did not exist in the original corpus used to train the model. Please see [WordRepresentationMethods](/WordRepresentationMethods.md) for more details.
 
->>>>> What are the entries of this matrix? the entries are usually the number of times a word appears in a context. So in our example, we are looking for the number of times the word "surgery" appears in the "health" context. Now that we know what a co-occurrence matrix is, we can go through more the details of the GLoVe method. Based on this matrix, the co-occurrence probability matrix is built. The probabilities are the conditional probability that a word occurs given a specific context. Let's say $\mathbb p(surgery|health)$ gives the probability that "surgery" occurs in the "health" context. Further assume that $\mathbb p(surgery|politics)$ is the probability that the word "surgery" appears in the "politics" context. Which one is supposed to be bigger? Since we are talking about "surgery", it is more likely to observe it in the "health" context rathar than the "politics" context. In other words, the $\frac{\mathbb p(surgery|health)}{\mathbb p(surgery|politics)}$ ratio must be a large number, and a ratio, such as $\frac{\mathbb p(filibuster|health)}{\mathbb p(filibuster|politics)}$ must be a small one since it is more probable to see "filibuster" in the "politics" context.
+>>> - BERT (to be added)
 
->>>>> Consequently, it makes a perfect sense to look at this ratio a distinctive feature that can tell us about the semantic similarity of two words. Now, how can we relate this to some vectors? Here is the beauty of what Pennington et al. (2014) are suggesting. I will try to briefly talk about the main idea. We need to find some $d$ dimensional vectors representing the words and contexts by incorporating the aforementioned probability ratios which can be also presented in a more generic format as $\frac{\mathbb p(Word_i|Context_k)}{\mathbb p(Word_j|Context_k)}$.
+>>> - Sentence BERT (to be added)
 
->>>>> Let's assume that the $w_i$, $w_j$ and $w_k$ give the $d$ dimensional vectors representing $Word_i$, $Word_j$ and $Context_k$, respectively. Our purpose would be to estimate $w_i$, $w_j$ and $w_k$ considering the aforementioned probability ratio. To this end, in the paper, they suggest Eq.(1) relating the global vectors to the probability ratios:
+>>> - Fine-tuned [microsoft/mpnet-base](#https://www.microsoft.com/en-us/research/blog/mpnet-combines-strengths-of-masked-and-permuted-language-modeling-for-language-understanding/) transformer
 
-<p align="center">$\mathbb F(w_i, w_j, w_k) = \frac{\mathbb p(Word_i|Context_k)}{\mathbb p(Word_j|Context_k)}$ $\mathbb (1)$</p>
-
->>>>> They; afterwards, make some assumptions about the function $\mathbb F$ to simplify the estimation. After appying all these assumptions, the relationship in Eq. (1) simplifies to:
-
-<p align="center">$\mathbb w_i^Tw_k + b_i + b_k = log(x_ik)$ $\mathbb (2)$</p>
-
->>>>> where, $b_i$ and $b_k$ are some bias terms to be estimated, and they appear here to restore the symmetry of the co-oocurence matrix (the interchangeability of words and contexts), and $x_ik$ is the number of times the word $i$ appears in context $k$. Finally, the problem can be formulated as a weighted least squares problem with an objectibe function defined as:
-
-<p align="center">$\mathbb \sum_{i,j=1}^{V} \omega(ij)(log(x_ij) - w_i^Tw_j - b_i - b_j)^2$ $\mathbb (3)$</p>
-
->>>>> where, V is the number of words in the corpus, and $\omega(ij)$ is a weight function assigned to every word-context pair to avoid the dominance of very frequent and infrequent words.
-
->>>>> The final solution is obtained by minimizing the objective function in Eq. (3). 
-
->>> - Fasttext Token Transformation
-
-
-
-
- 
 
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
  >  >  >  **tokenizer_pattern**: in case we want to tokenize the text, what pattern we need to use. The default is ```support.TOKEN_PATTERN = r"\b[^\d\W]+\b"```.
@@ -485,6 +465,11 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 [2] A. Joulin, E. Grave, P. Bojanowski, M. Douze, H. Jégou, T. Mikolov, FastText.zip: Compressing text classification models
 
-[3] J. Pennington, R. Socher, and C. D. Manning. 2014. GloVe: Global Vectors for Word Representation. 
+<<<<<<< HEAD
+
+
+
+
+>>>>>>> ea69393615305eeb9ef8b9e96a7e74a9d294075b
 
 
