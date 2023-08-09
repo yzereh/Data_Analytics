@@ -453,12 +453,12 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
- >  >  >  **tokenizer_pattern**: in case we want to tokenize the text, what pattern we need to use. The default is ```support.TOKEN_PATTERN = r"\b[^\d\W]+\b"```.
- >  >  >  **transform_method**: which method we want to use to transform the words (sentences) to vectors. I tried several embedding and classical methods and decided to stick to these two methods:
+ >  >  >  **tokenizer_pattern**: in case we want to tokenize the text, this parameter gives the pattern we need to use. The default is ```support.TOKEN_PATTERN = r"\b[^\d\W]+\b"```.
+ >  >  >  **transform_method**: which method we want to use to transform the words (sentences) to vectors. I tried several embedding and classical methods and decided to stick to these two methods (for now):
  
- >  >  > 1. the basic CountVectorizer() method w
+ >  >  > 1. the basic CountVectorizer() method which simply gives the documnet-term matrix.
  
- >  >  > 2. 
+ >  >  > 2. the more sophisticated fine-tuned mpnet which is a sentence transformer trying to capture the semantic similarites between texts.
    
 ### References
 
@@ -466,11 +466,6 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 [2] A. Joulin, E. Grave, P. Bojanowski, M. Douze, H. Jégou, T. Mikolov, FastText.zip: Compressing text classification models
 
-<<<<<<< HEAD
 
-
-
-
->>>>>>> ea69393615305eeb9ef8b9e96a7e74a9d294075b
 
 
