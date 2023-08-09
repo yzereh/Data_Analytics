@@ -11,7 +11,8 @@ import torch
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import normalize
 
-MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
+#MAIN_DIRECTORY = "path_to_your_main_dir_followed_by_a_slash"
+MAIN_DIRECTORY = "E:/Data_Playground/Analytics/"
 DATA_FILE_NAME = "health_care_titles.txt"
 ADDITIONAL_FREQUENT_WORDS_FILE_NAME = 'additional_frequent_words.json'
 FREQUENT_WORDS_CATEGORIES = ['health', 'general', 'analytics', 'information technology']
