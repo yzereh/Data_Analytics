@@ -36,7 +36,7 @@ The main concepts of the project can be enumerated as follows:
 There are two main purposes that we are trying to reach by doing this project. Firstly, we are going to go through the details of dealing with the challenges faced when working with a practical problem. The challenges are both technical and practical, and I will try to introduce the challenge, discuss it and try one or more solutions. We will see how a seemingly simple yet fruitful Machine Learning procedure can be put in practice and used in a production environment, which is typically called $\color{rgb(216,118,0)}\large\textrm{productionization}$ or $\color{rgb(216,118,0)}\large\textrm{operationalization}$.
 Moreover, the codes, visualizations and the logic of the project can be a starting point for other similar projects in the field; as a result, it might provide some ideas for those interested in a similar domain. Figure 1 shows the main framework of the project. As it can be seen, in almost every step, there are several options to follow, and I will try to provide some insights on our decision making process which is going to be mainly data driven. 
 
-<img src="/general_framework.png" name="figure1" title="Figure 1">
+<img src="/general_flow.png" name="figure1" title="Figure 1">
 <p align="center"><a>Figure 1. Framework of the project</a></p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
