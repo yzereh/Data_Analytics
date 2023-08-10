@@ -5,9 +5,9 @@
  
 1. [Project Description](#project-description)
 
->  - [Purpose of the Project](#purpose)
->  - [Main Collars](#main-collars)
->  - [Prerequisites](#prerequisites)
+> - [Purpose of the Project](#purpose)
+> - [Main Collars](#main-collars)
+> - [Prerequisites](#prerequisites)
 
 2. [Installation](#installation)
 
@@ -15,7 +15,13 @@
 
 4. [Detailed Project Explanation](#detailed-project-explanation)
 
-5. [References](#references)
+> - [Load the data into memory](#Load-the-data-into-memory)
+> - Non-English Titles
+> - Stemming
+> - Stopwords and Frequent words Removal
+> - Duplicates
+
+6. [References](#references)
 </details>
 
 ### Project Description
@@ -453,6 +459,7 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
  >>> **tokenizer_pattern**: in case we want to tokenize the text, this parameter gives the pattern we need to use. The default is ```support.TOKEN_PATTERN = r"\b[^\d\W]+\b"```.
+
 
  >>> **transform_method**: which method we want to use to transform the words (sentences) to vectors. I tried several embedding and classical methods and decided to stick to these two methods (for now):
  
