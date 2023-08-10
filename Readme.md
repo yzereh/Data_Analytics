@@ -452,12 +452,13 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
 
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
- >  >  >  **tokenizer_pattern**: in case we want to tokenize the text, this parameter gives the pattern we need to use. The default is ```support.TOKEN_PATTERN = r"\b[^\d\W]+\b"```.
- >  >  >  **transform_method**: which method we want to use to transform the words (sentences) to vectors. I tried several embedding and classical methods and decided to stick to these two methods (for now):
+ >>> **tokenizer_pattern**: in case we want to tokenize the text, this parameter gives the pattern we need to use. The default is ```support.TOKEN_PATTERN = r"\b[^\d\W]+\b"```.
+
+ >>> **transform_method**: which method we want to use to transform the words (sentences) to vectors. I tried several embedding and classical methods and decided to stick to these two methods (for now):
  
- >  >  > 1. the basic CountVectorizer() method which simply gives the documnet-term matrix.
+ >>> 1. the basic CountVectorizer() method which simply gives the documnet-term matrix.
  
- >  >  > 2. the more sophisticated fine-tuned mpnet which is a sentence transformer trying to capture the semantic similarites between texts.
+ >>> 2. the more sophisticated fine-tuned mpnet which is a sentence transformer trying to capture the semantic similarites between texts.
    
 ### References
 
