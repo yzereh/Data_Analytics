@@ -21,7 +21,7 @@
 > - Stopwords and Frequent words Removal
 > - Duplicates
 
-6. [References](#references)
+5. [References](#references)
 </details>
 
 ### Project Description
