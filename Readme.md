@@ -107,6 +107,8 @@ The project contains four main modules.
 
 1. The [support.py](/support.py) module, as the name says, contains the majority of required functions supporting the main object of the project located in the [cluster.py](/cluster.py) module. Moreover, the constant variables and the paths to the essential files can be found in this module. We will go through the details in the [Codes Explanations](#codes-explanations) section.
 2. The cluster.py module has the main object that can be used to perform the clustering. In brief, all the concepts pointed out in [Project Description](#project-description) section are executed in this module.
+3. 
+4. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -172,13 +174,13 @@ def is_the_language_english(documents: Union[str, Sequence[str], map]) -> List[s
 
 > - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
- >  >  >  **documents**: a string, a map or a sequence of strings. In our case, it is the list of titles. 
+ >>> **documents**: a string, a map or a sequence of strings. In our case, it is the list of titles. 
 
 > - $\color{rgb(216,118,0)}\large\textbf{return}$: A list with the same length as that of the documents. If the title is in English, it will be kept; otherwise, it will be replaced by ```None```. 
 
- >  >  >  **Note 1**: the get_fasttext_lang_detect_path() function is added to the [support.py](/support.py) module to make the model loading more flexible to potential changes. 
+ >>> **Note 1**: the get_fasttext_lang_detect_path() function is added to the [support.py](/support.py) module to make the model loading more flexible to potential changes. 
  
- >  >  >  **Note 2**: I left this step as an optional argument which can be selected by the analyst. The ```drop_non_english``` argument in the ```process_clean_the_text()``` method is a Boolean variable, and the default value is True.
+ >>> **Note 2**: I left this step as an optional argument which can be selected by the analyst. The ```drop_non_english``` argument in the ```process_clean_the_text()``` method is a Boolean variable, and the default value is True.
 
   
 ```sh	 
@@ -186,7 +188,7 @@ def get_fasttext_lang_detect_path(main_directory: str = MAIN_DIRECTORY, model_na
 	return os.path.join(main_directory, model_name) 
 ```
 
->  >  >  The model_name parameter is set to ```FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin'``` which is the language identification model, and it can be downloaded from [here](https://fasttext.cc/docs/en/language-identification.html). 
+>>> The model_name parameter is set to ```FASTTEXT_LANGUAGE_DETECT_NAME = 'lid.176.bin'``` which is the language identification model, and it can be downloaded from [here](https://fasttext.cc/docs/en/language-identification.html). 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -254,7 +256,7 @@ self.titles_stopwords_removed = read_lines
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-> > > Again, the ```remove_stop_words``` is a Boolean variable and can be set by the analyst. Note that the major finction is ```get_stop_words()``` which can be found in the [support.py](/support.py) module. It takes some information from the user and returns the list of stopwprds to be removed from the text. 
+>>> Again, the ```remove_stop_words``` is a Boolean variable and can be set by the analyst. Note that the major finction is ```get_stop_words()``` which can be found in the [support.py](/support.py) module. It takes some information from the user and returns the list of stopwprds to be removed from the text. 
 
 ```sh
 def get_stop_words(add_extra_frequent_words: bool, extra_frequent_words_categories, remove_stop_word_signs: bool, stem_the_words):
@@ -273,7 +275,7 @@ def get_stop_words(add_extra_frequent_words: bool, extra_frequent_words_categori
 
 > - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
- > > > The first two arguments of this function are fed to another function called ```get_frequent_words()``` which gets the path and the categories of the frequent words and returns the list of frequent words associated with the given categories.
+ >>> The first two arguments of this function are fed to another function called ```get_frequent_words()``` which gets the path and the categories of the frequent words and returns the list of frequent words associated with the given categories.
 
 ```sh
 def get_frequent_words(path_to_additional_frequent_words: str,
@@ -302,13 +304,13 @@ def get_frequent_words(path_to_additional_frequent_words: str,
 
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
-  >  >  >  **path_to_additional_frequent_words**: a string showing the path to [additional_frequent_words.json](/additional_frequent_words.json) file, and it is obtained using the function 
+  >>>  **path_to_additional_frequent_words**: a string showing the path to [additional_frequent_words.json](/additional_frequent_words.json) file, and it is obtained using the function 
   ```get_extra_frequent_words_path()```.
 
-  >  >  >  **categories**: a string or a sequence of strings giving the categories of the additional frequent words to be removed from the text. The default is "all" meaning that the frequent words for all categories 
+  >>>  **categories**: a string or a sequence of strings giving the categories of the additional frequent words to be removed from the text. The default is "all" meaning that the frequent words for all categories 
   will be removed. If someone wants to remove the frequent words associated with the "health" and "general" categories only, this can be specified as ```categories = ["health", "general"]```. 
 
->  >  > The third argument of the function ```get_stop_words()``` (```remove_stop_word_signs```) is given to the ```download_load_stop_words``` function which downloads and extends the stopwords and removes the signs 
+>>> The third argument of the function ```get_stop_words()``` (```remove_stop_word_signs```) is given to the ```download_load_stop_words``` function which downloads and extends the stopwords and removes the signs 
 from the stopwords if needed. The final output would be the list of stopwords and the optional frequent words.
  
 ```sh
@@ -331,18 +333,18 @@ def download_load_stop_words(remove_signs: bool = True, extra_frequent_words: Li
 
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
- >  >  >  **remove_stop_word_signs**: a Boolean specifying whether or not to remove the signs from stopwords.
+ >>>  **remove_stop_word_signs**: a Boolean specifying whether or not to remove the signs from stopwords.
  
- >  >  >  **extra_frequent_words**: the list of frequent words to be removed. It is defined within the ```get_stop_words()``` function as:
+ >>>  **extra_frequent_words**: the list of frequent words to be removed. It is defined within the ```get_stop_words()``` function as:
 
 ```sh
 extra_frequent_words = get_frequent_words(path_to_extra_frequent_words, extra_frequent_words_categories)
 ```
 
->  >  > The last argument of the ```get_stop_words()``` function is **stem_the_words** which is a Boolean variable determining whether or not the stopwords must be stemmed. 
+>>> The last argument of the ```get_stop_words()``` function is **stem_the_words** which is a Boolean variable determining whether or not the stopwords must be stemmed. 
 
 
->  >  > **Note**: When removng the stopwords, some of the titles might be removed completely. In this case, we will have an empty string ```''``` which will be replaced by ```None``` at the last step. 
+>>> **Note**: When removng the stopwords, some of the titles might be removed completely. In this case, we will have an empty string ```''``` which will be replaced by ```None``` at the last step. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -374,11 +376,11 @@ def find_duplicates(collection_of_titles: Union[Sequence[str], map]) -> tuple[di
 
  > - $\color{rgb(216,118,0)}\large\textrm{params}$:
 
- >  >  >  **collection_of_titles**: the sequence of cleaned titles. 
+ >>>  **collection_of_titles**: the sequence of cleaned titles. 
  
  > - $\color{rgb(216,118,0)}\large\textrm{return}$: a tuple including a dictionary of duplicates with their locations and the duplicates count
  
-> > Next, the output of the function is used to locate all the duplicates and replace them with ```None```.
+>> Next, the output of the function is used to locate all the duplicates and replace them with ```None```.
 
 ```sh
 self.duplicated_with_indices, self.duplicates_count = find_duplicates(read_lines)
@@ -391,7 +393,7 @@ if self.duplicates_count > 0:
             read_lines[each_index] = None
 ```  
 
-> > In the last step in the ```process_clean_the_text()``` method; as pointed out in the previous section, the empty string ```''``` will be replaced by ```None```. 
+>> In the last step in the ```process_clean_the_text()``` method; as pointed out in the previous section, the empty string ```''``` will be replaced by ```None```. 
 
 ```sh
 read_lines = list(map(lambda each_line: None if each_line == '' and each_line is not None else each_line, read_lines))
