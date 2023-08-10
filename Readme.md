@@ -15,7 +15,7 @@
 
 4. [Detailed Project Explanation](#detailed-project-explanation)
 
-> - [Load the data into memory](#Load-the-data-into-memory)
+> - [Load the data into memory](#load-the-data-into-memory)
 > - Non-English Titles
 > - Stemming
 > - Stopwords and Frequent words Removal
