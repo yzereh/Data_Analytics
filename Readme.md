@@ -20,6 +20,8 @@
 > - Stemming
 > - Stopwords and Frequent words Removal
 > - Duplicates
+> - Get the Original and Cleaned Titles
+> - Word/Sentence-to-Vector Transformation and Bag of words Representation
 
 5. [References](#references)
 </details>
@@ -465,9 +467,9 @@ self.cleaned_data_without_nones = [each_element for each_element in cleaned_data
 
  >>> **transform_method**: which method we want to use to transform the words (sentences) to vectors. I tried several embedding and classical methods and decided to stick to these two methods (for now):
  
- >>> 1. the basic CountVectorizer() method which simply gives the documnet-term matrix.
+ >>> 1. the basic CountVectorizer() method which simply gives the documnet-term matrix. This can be selected by '''sh support.BASIC_TRANSFORM_NAME''' 
  
- >>> 2. the more sophisticated fine-tuned mpnet which is a sentence transformer trying to capture the semantic similarites between texts.
+ >>> 2. the more sophisticated fine-tuned mpnet which is a sentence transformer trying to capture the semantic similarites which can be reached by '''sh support.PRETRAINED_EMBEDDING_MODEL_NAME'''
    
 ### References
 
